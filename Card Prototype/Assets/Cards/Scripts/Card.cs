@@ -9,7 +9,6 @@ namespace Cards
     {
         [SerializeField]
         private GameObject _frontCard;
-
         [SerializeField]
         private MeshRenderer _picture;
         [SerializeField]
@@ -25,6 +24,8 @@ namespace Cards
         [SerializeField]
         private TextMeshPro _type;
 
+        public bool IsFrontSide => _frontCard.activeSelf;
+
         public void Configuration (CardPropertiesData data, Material picture, string description)
         {
             _cost.text = data.Cost.ToString();
@@ -34,7 +35,15 @@ namespace Cards
             _attack.text = data.Attack.ToString();
             _health.text = data.Health.ToString();
             _type.text = CardUnitType.None == data.Type ? "" : data.Type.ToString();
+        }
 
+        [ContextMenu ("Switch Enable")]
+
+        public void SwitchEnable()
+        {
+            var boolean = !IsFrontSide;
+            _frontCard.SetActive(boolean);
+            _picture.enabled = boolean;
         }
     }
 }
