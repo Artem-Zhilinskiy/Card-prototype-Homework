@@ -42,6 +42,8 @@ namespace Cards
 
         private IEnumerator MoveInHand(Card card, Transform parent)
         {
+            yield return UpCard(card);
+            yield return RotateCard(card);
             var time = 0f;
             var startPos = card.transform.position;
             var endPos = parent.position;
@@ -51,6 +53,41 @@ namespace Cards
                 time += Time.deltaTime;
                 yield return null;
             }
+            //Чтобы точно расположить карту на месте
+            card.transform.position = endPos;
+
+            card.State = CardStateType.InHand;
+        }
+
+        private IEnumerator UpCard(Card card)
+        {
+            var time = 0f;
+            var startPos = card.transform.position;
+            var endPos = new Vector3(card.transform.position.x, 40f, card.transform.position.z);
+            while (time <= 1f)
+            {
+                card.transform.position = Vector3.Lerp(startPos, endPos, time);
+                time += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        private IEnumerator RotateCard(Card card)
+        {
+            var time = 0f;
+            var startRot = card.transform.rotation;
+            var endRot = new Quaternion(0, 0, 1, 0);
+            //var endRot = new Quaternion();
+            //endRot.eulerAngles = new Vector3(0, 0, 180);
+            while (time <= 1f)
+            {
+                card.transform.rotation = Quaternion.Slerp(startRot, endRot, time);
+                time += Time.deltaTime;
+                yield return null;
+            }
+            //endRot.eulerAngles = new Vector3(0, 0, 180);
+            card.transform.rotation = endRot;
+            yield return null;
         }
     }
 }

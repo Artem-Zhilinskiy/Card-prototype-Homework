@@ -52,7 +52,7 @@ namespace Cards
         {
             if(Input.GetKeyDown(KeyCode.Space))
             {
-                var index = _player2Deck.Length - 1;
+                var index = _player1Deck.Length - 1;
                 for (int i = index; i >= 0; i--)
                 {
                     if (_player1Deck[i] != null)
@@ -75,7 +75,7 @@ namespace Cards
             {
                 deck[i] = Instantiate(_cardPrefab, root);
                 deck[i].transform.localPosition = vector;
-                if (deck[i].IsFrontSide) deck[i].SwitchEnable();
+                //if (deck[i].IsFrontSide) deck[i].SwitchEnable(); 
                 vector += new Vector3(0f,c_stepCardInDeck,0f);
 
                 var random = _allCards[Random.Range(0, _allCards.Count)];
