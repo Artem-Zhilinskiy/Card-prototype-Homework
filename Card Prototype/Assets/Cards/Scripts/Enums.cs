@@ -17,7 +17,9 @@ namespace Cards
 	{
 		Common = 0,
 		Mage = 1,
-		Warrior = 2
+		Warrior = 2,
+		Priest = 3,
+		Hunter = 4
 	}
 
 	public enum CardStateType : byte
