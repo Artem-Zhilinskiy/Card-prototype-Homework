@@ -12,6 +12,7 @@ namespace Cards
     public static class CardUtility
     {
         private const string c_ConfigPath = "//Cards//Resources//CommonCardDescription.xml";
+        private const string m_ConfigPath = "//Cards//Resources//MageCardDescription.xml";
 
         private static readonly Dictionary<uint, string> _descriptions = new Dictionary<uint, string>();
         private static readonly List<uint> _uncollectibleIds = new List<uint>();
@@ -23,8 +24,10 @@ namespace Cards
             try
             {
                 var root = XDocument.Load(Application.dataPath + c_ConfigPath).Root;
+                var rootM = XDocument.Load(Application.dataPath + m_ConfigPath).Root;
                 id = 1;
                 ConfigurationDescriptions(root);
+                ConfigurationDescriptions(rootM);
             }
             //Обработка исключения
             catch (Exception e)
