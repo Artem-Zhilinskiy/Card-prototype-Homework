@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Descriptions>
   <Pack Cost="0" Type="Mage">
-    <Unit Id="1001" Name="Babbling Book"/>
-    <Unit Id="1002" Name="Arcanologist"/>
-    <Unit Id="1003" Name="Pyromaniac"/>
-    <Unit Id="1004" Name="Aegwynn"/>
-    <Unit Id="1005" Name="Ethereal Conjurer"/>
-    <Unit Id="1006" Name="Kalecgos"/>
+    <Unit Id="1" Name="Babbling Book"/>
+    <Unit Id="2" Name="Arcanologist"/>
+    <Unit Id="3" Name="Pyromaniac"/>
+    <Unit Id="4" Name="Aegwynn"/>
+    <Unit Id="5" Name="Ethereal Conjurer"/>
+    <Unit Id="6" Name="Kalecgos"/>
   </Pack>
 </Descriptions>

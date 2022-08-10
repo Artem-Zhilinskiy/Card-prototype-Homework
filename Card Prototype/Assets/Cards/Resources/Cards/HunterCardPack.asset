@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4cf6de20b2646f4193e999d2dee71e4, type: 3}
+  m_Name: HunterCardPack
+  m_EditorClassIdentifier: 
+  _sideType: 2
+  _cost: 0
+  _cards:
+  - Id: 23
+    Name: Springpaw
+    Texture: {fileID: 2800000, guid: f2d90eba4f777f4409346756a334f929, type: 3}
+    Attack: 1
+    Health: 1
+    Type: 2
+  - Id: 24
+    Name: breeder
+    Texture: {fileID: 2800000, guid: 649857dd43695f048983eb1e1cec522d, type: 3}
+    Attack: 1
+    Health: 3
+    Type: 0
+  - Id: 25
+    Name: huntress
+    Texture: {fileID: 2800000, guid: 1af3d294d1520514bba12c1d1a844801, type: 3}
+    Attack: 3
+    Health: 4
+    Type: 0
+  - Id: 26
+    Name: houndmaster
+    Texture: {fileID: 2800000, guid: dd04363f0bfea6841b7c15dcd11a970a, type: 3}
+    Attack: 3
+    Health: 6
+    Type: 0
+  - Id: 27
+    Name: savannah hightmare
+    Texture: {fileID: 2800000, guid: 43b7821a1d3fbdb4486d5c04e49ea3d5, type: 3}
+    Attack: 6
+    Health: 5
+    Type: 2
+  - Id: 28
+    Name: krush
+    Texture: {fileID: 2800000, guid: 5695676de08a01c4597b796133e2161d, type: 3}
+    Attack: 8
+    Health: 8
+    Type: 2

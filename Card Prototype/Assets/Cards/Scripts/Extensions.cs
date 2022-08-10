@@ -13,6 +13,9 @@ namespace Cards
     {
         private const string c_ConfigPath = "//Cards//Resources//CommonCardDescription.xml";
         private const string m_ConfigPath = "//Cards//Resources//MageCardDescription.xml";
+        private const string p_ConfigPath = "//Cards//Resources//PriestCardDescription.xml";
+        private const string w_ConfigPath = "//Cards//Resources//WarriorCardDescription.xml";
+        private const string h_ConfigPath = "//Cards//Resources//HunterCardDescription.xml";
 
         private static readonly Dictionary<uint, string> _descriptions = new Dictionary<uint, string>();
         private static readonly List<uint> _uncollectibleIds = new List<uint>();
@@ -25,9 +28,15 @@ namespace Cards
             {
                 var root = XDocument.Load(Application.dataPath + c_ConfigPath).Root;
                 var rootM = XDocument.Load(Application.dataPath + m_ConfigPath).Root;
+                var rootP = XDocument.Load(Application.dataPath + p_ConfigPath).Root;
+                var rootW = XDocument.Load(Application.dataPath + w_ConfigPath).Root;
+                var rootH = XDocument.Load(Application.dataPath + h_ConfigPath).Root;
                 id = 1;
                 ConfigurationDescriptions(root);
                 ConfigurationDescriptions(rootM);
+                ConfigurationDescriptions(rootP);
+                ConfigurationDescriptions(rootW);
+                ConfigurationDescriptions(rootH);
             }
             //Обработка исключения
             catch (Exception e)

@@ -15,37 +15,37 @@ MonoBehaviour:
   _sideType: 1
   _cost: 0
   _cards:
-  - Id: 1001
+  - Id: 1
     Name: Babbling book
     Texture: {fileID: 2800000, guid: e4a79e053ff24374094bc451a0c97135, type: 3}
     Attack: 1
     Health: 1
     Type: 0
-  - Id: 1002
+  - Id: 2
     Name: Arcanologist
     Texture: {fileID: 2800000, guid: d52cca8a1994c194493ee5bbb33779ef, type: 3}
     Attack: 2
     Health: 3
     Type: 0
-  - Id: 1003
+  - Id: 3
     Name: Pyromaniac
     Texture: {fileID: 2800000, guid: 59a47f27d13f12c42a64087a9e15cbf2, type: 3}
     Attack: 3
     Health: 4
     Type: 0
-  - Id: 1004
+  - Id: 4
     Name: Aegwynn
     Texture: {fileID: 2800000, guid: b58997603ede4a740b9c927239fee329, type: 3}
     Attack: 5
     Health: 5
     Type: 0
-  - Id: 1005
+  - Id: 5
     Name: Ethereal Conjurer
     Texture: {fileID: 2800000, guid: 43428e8ba69070e45a9bac5422a35344, type: 3}
     Attack: 5
     Health: 4
     Type: 0
-  - Id: 1006
+  - Id: 6
     Name: Kalecgos
     Texture: {fileID: 2800000, guid: 528a7dc6ea78b2b4a984296f13273758, type: 3}
     Attack: 6

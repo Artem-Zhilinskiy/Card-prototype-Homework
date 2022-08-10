@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4cf6de20b2646f4193e999d2dee71e4, type: 3}
+  m_Name: WarriorCardPack
+  m_EditorClassIdentifier: 
+  _sideType: 2
+  _cost: 0
+  _cards:
+  - Id: 15
+    Name: Bloodsail
+    Texture: {fileID: 2800000, guid: c3580bc0a3015fa4f85f99b9e01aaf8d, type: 3}
+    Attack: 2
+    Health: 1
+    Type: 0
+  - Id: 16
+    Name: Armorsmith
+    Texture: {fileID: 2800000, guid: 890438c6167266d41b31aca4078ae3d6, type: 3}
+    Attack: 1
+    Health: 4
+    Type: 0
+  - Id: 17
+    Name: Cruel Taskmaster
+    Texture: {fileID: 2800000, guid: 5e69743eaa5985644bd630a84e068f41, type: 3}
+    Attack: 2
+    Health: 2
+    Type: 0
+  - Id: 18
+    Name: Berserker
+    Texture: {fileID: 2800000, guid: d96441219bb95684ea3397f08c08b82d, type: 3}
+    Attack: 2
+    Health: 4
+    Type: 0
+  - Id: 19
+    Name: Bloodhoof
+    Texture: {fileID: 2800000, guid: 43b7821a1d3fbdb4486d5c04e49ea3d5, type: 3}
+    Attack: 2
+    Health: 6
+    Type: 0
+  - Id: 20
+    Name: Darius Crawley
+    Texture: {fileID: 2800000, guid: 4184dbbed91bc7841a6b016f01fcb1ec, type: 3}
+    Attack: 4
+    Health: 5
+    Type: 0
+  - Id: 21
+    Name: Shieldmaiden
+    Texture: {fileID: 2800000, guid: 9c76d50286eccce428902e22e0906052, type: 3}
+    Attack: 5
+    Health: 5
+    Type: 0
+  - Id: 22
+    Name: Grommash
+    Texture: {fileID: 2800000, guid: 9c6b0beec50ca0748877dd524a3e9265, type: 3}
+    Attack: 4
+    Health: 9
+    Type: 0
