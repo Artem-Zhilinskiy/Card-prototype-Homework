@@ -1,13 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Descriptions>
-  <Pack Cost="0" Type="Priest">
+  <Pack Cost="1" Type="Priest">
     <Unit Id="7" Name="Nortshire Cleric"/>
     <Unit Id="8" Name="Psychic Conjurer"/>
+  </Pack>
+    <Pack Cost="2" Type="Priest">
     <Unit Id="9" Name="Kul-Tiran Chaplain"/>
     <Unit Id="10" Name="Radiant Elemental"/>
+  </Pack>
+    <Pack Cost="3" Type="Priest">
     <Unit Id="11" Name="Shadowed Spirit"/>
+  </Pack>
+    <Pack Cost="5" Type="Priest">
     <Unit Id="12" Name="Drakonid operative"/>
     <Unit Id="13" Name="Lyra the sunshard"/>
+  </Pack>
+    <Pack Cost="8" Type="Priest">
     <Unit Id="14" Name="Murozond"/>
   </Pack>
 </Descriptions>

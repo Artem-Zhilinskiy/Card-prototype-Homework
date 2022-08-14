@@ -1,13 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Descriptions>
-  <Pack Cost="0" Type="Warrior">
-    <Unit Id="15" Name="Bloodsail"/>
-    <Unit Id="16" Name="Armorsmith"/>
-    <Unit Id="17" Name="Cruel Taskmaster"/>
-    <Unit Id="18" Name="Berserker"/>
-    <Unit Id="19" Name="Bloodhoof"/>
-    <Unit Id="20" Name="Darius Crawley"/>
-    <Unit Id="21" Name="Shieldmaiden"/>
-    <Unit Id="22" Name="Grommash"/>
+  <Pack Cost="1" Type="Hunter">
+    <Unit Id="23" Name="Springpaw"/>
+  </Pack>
+    <Pack Cost="2" Type="Hunter">
+    <Unit Id="24" Name="Selective Breeder"/>
+  </Pack>
+    <Pack Cost="3" Type="Hunter">
+    <Unit Id="25" Name="Cloaked Huntress"/>
+  </Pack>
+    <Pack Cost="4" Type="Hunter">
+    <Unit Id="26" Name="Houndmaster Shaw"/>
+  </Pack>
+    <Pack Cost="6" Type="Hunter">
+    <Unit Id="27" Name="Savannah nightmare"/>
+  </Pack>
+    <Pack Cost="9" Type="Hunter">
+    <Unit Id="28" Name="King Krush"/>
   </Pack>
 </Descriptions>

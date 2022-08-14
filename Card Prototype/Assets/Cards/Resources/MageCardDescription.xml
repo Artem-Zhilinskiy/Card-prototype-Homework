@@ -1,11 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Descriptions>
-  <Pack Cost="0" Type="Mage">
+  <Pack Cost="1" Type="Mage">
     <Unit Id="1" Name="Babbling Book"/>
+  </Pack>
+    <Pack Cost="2" Type="Mage">
     <Unit Id="2" Name="Arcanologist"/>
+  </Pack>
+    <Pack Cost="3" Type="Mage">
     <Unit Id="3" Name="Pyromaniac"/>
+  </Pack>
+    <Pack Cost="5" Type="Mage">
     <Unit Id="4" Name="Aegwynn"/>
     <Unit Id="5" Name="Ethereal Conjurer"/>
+  </Pack>
+    <Pack Cost="9" Type="Mage">
     <Unit Id="6" Name="Kalecgos"/>
   </Pack>
 </Descriptions>
