@@ -76,7 +76,7 @@ namespace Cards
         {
             var time = 0f;
             var startRot = card.transform.rotation;
-            var endRot = new Quaternion(0, 0, 1, 0);
+            var endRot = new Quaternion(0, 0, 0.1f, 0);
             //var endRot = new Quaternion();
             //endRot.eulerAngles = new Vector3(0, 0, 180);
             while (time <= 1f)

@@ -31,7 +31,6 @@ namespace Cards
 
         #region Тест индикаторов здоровья игроков
         //Тест индикаторов здоровья
-        /*
         private void TestHealthIndicators()
         {
             if (Input.GetKeyDown(KeyCode.T))
@@ -45,7 +44,6 @@ namespace Cards
         {
             TestHealthIndicators();
         }
-        */
         #endregion
     }
 }
