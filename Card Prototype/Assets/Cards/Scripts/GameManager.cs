@@ -69,16 +69,16 @@ namespace Cards
         private Card[] CreateDeck(Transform root)
         {
             //Здесь случайный набор, надо переделать в соответствии с ТЗ
-            var deck = new Card[_cardDeckCount];
-            var vector = Vector3.zero;
-            for (int i = 0; i<_cardDeckCount;i++)
+            var deck = new Card[_cardDeckCount]; //Содаётся массив вместимостью 30
+            var vector = Vector3.zero; //Определяестся нулевой вектор
+            for (int i = 0; i<_cardDeckCount;i++) //Цикл от 0 до 30
             {
-                deck[i] = Instantiate(_cardPrefab, root);
-                deck[i].transform.localPosition = vector;
+                deck[i] = Instantiate(_cardPrefab, root); //Создаётся префаб карты в заданном через инспектор месте
+                deck[i].transform.localPosition = vector; //Переопредление места карты
                 //if (deck[i].IsFrontSide) deck[i].SwitchEnable(); 
-                vector += new Vector3(0f,c_stepCardInDeck,0f);
+                vector += new Vector3(0f,c_stepCardInDeck,0f); //Подъём места следующей карты
 
-                var random = _allCards[Random.Range(0, _allCards.Count)];
+                var random = _allCards[Random.Range(0, _allCards.Count)]; //Берётся случайная карта из заранее созданного массива всех карт
 
                 var newMat = new Material(_baseMat)
                 {

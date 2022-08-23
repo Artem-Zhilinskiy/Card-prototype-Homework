@@ -12,17 +12,15 @@ namespace Cards
         //Метод выкладывания на стол карт из выбранного набора
         private void ShowPack()
         {
-            //var deck = new Card[_packs];
+            //_choiceDeck[i] = Instantiate(_cardPrefab, root);
         }
-
-        private Card[] _cardsInHand;
 
         [SerializeField]
         private Transform[] _positions;
 
-        private void Start()
+        private void Awake()
         {
-            _cardsInHand = new Card[_positions.Length];
+            _choiceDeck = new Card[_positions.Length];
         }
 
         public bool SetNewCard(Card newCard)
@@ -34,16 +32,17 @@ namespace Cards
                 Destroy(newCard.gameObject);
                 return false;
             }
-            _cardsInHand[result] = newCard;
+            _choiceDeck[result] = newCard;
+            //Здесь нужен метод создания карты 
             //StartCoroutine(MoveInHand(newCard, _positions[result]));
             return true;
         }
 
         private int GetLastPosition()
         {
-            for (int i = 0; i < _cardsInHand.Length; i++)
+            for (int i = 0; i < _choiceDeck.Length; i++)
             {
-                if (_cardsInHand[i] == null) return i;
+                if (_choiceDeck[i] == null) return i;
             }
             return -1;
         }
