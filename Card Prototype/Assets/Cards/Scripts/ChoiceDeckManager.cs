@@ -10,9 +10,18 @@ namespace Cards
         private Card[] _choiceDeck;
 
         //Метод выкладывания на стол карт из выбранного набора
+        //1. Создать через Instantiate(что и где)
+        //2. Переопределить её место?
+        //3. Вызвать Card.Configuration (Передать CardProprtiesData, картинку и описание)
+        //На каждой карте висит скрипт Card!
         private void ShowPack()
         {
             //_choiceDeck[i] = Instantiate(_cardPrefab, root);
+            //for (int i = 0; i < GameManager._packs[i]; i++)
+            for (int i = 0; i < GetComponent<GameManager>()._packs[i].size; i++)
+            {
+
+            }
         }
 
         [SerializeField]
@@ -46,5 +55,7 @@ namespace Cards
             }
             return -1;
         }
+
+
     }
 }

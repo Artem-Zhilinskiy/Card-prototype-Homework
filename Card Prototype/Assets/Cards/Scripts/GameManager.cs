@@ -16,7 +16,8 @@ namespace Cards
         private Card[] _player2Deck;
 
         [SerializeField]
-        private CardPackConfiguration[] _packs;
+        //private CardPackConfiguration[] _packs;
+        public CardPackConfiguration[] _packs;
         [SerializeField]
         private Card _cardPrefab;
 
@@ -35,9 +36,9 @@ namespace Cards
 
         private void Awake()
         {
-            IEnumerable<CardPropertiesData> arrayCards = new List<CardPropertiesData>();
-            foreach (var pack in _packs) arrayCards = pack.UnionProperties(arrayCards);
-            _allCards = new List<CardPropertiesData>(arrayCards);
+            IEnumerable<CardPropertiesData> arrayCards = new List<CardPropertiesData>(); //Создаётся массив со структурой карты
+            foreach (var pack in _packs) arrayCards = pack.UnionProperties(arrayCards); //Массивам присваевается стоимость
+            _allCards = new List<CardPropertiesData>(arrayCards); // Почему-то массив переприсваивается?
             _baseMat = new Material(Shader.Find("TextMeshPro/Sprite"));
             _baseMat.renderQueue = 2995;
         }
