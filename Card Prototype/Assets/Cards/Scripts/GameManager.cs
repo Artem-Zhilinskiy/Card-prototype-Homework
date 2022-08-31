@@ -19,7 +19,8 @@ namespace Cards
         //private CardPackConfiguration[] _packs;
         public CardPackConfiguration[] _packs;
         [SerializeField]
-        private Card _cardPrefab;
+        //public Card _cardPrefab { get; private set; }
+        public Card _cardPrefab;
 
         [SerializeField, Space]
         private PlayerHand _playerHand1;

@@ -6,8 +6,8 @@ namespace Cards
 {
     public class ChoiceDeckManager : MonoBehaviour
     {
-
-        private Card[] _choiceDeck;
+        private Material _baseMat;
+        //private Card[][] _choiceDeck;
 
         //Метод выкладывания на стол карт из выбранного набора
         //1. Создать через Instantiate(что и где)
@@ -16,11 +16,29 @@ namespace Cards
         //На каждой карте висит скрипт Card!
         private void ShowPack()
         {
+            int _pos = 0;
+            int _cos = 0;
+            var _choiceDeck = new Card[9,8];
+            IEnumerable<CardPropertiesData> arrayCards = new List<CardPropertiesData>(); //Создаётся массив со структурой карты
             //_choiceDeck[i] = Instantiate(_cardPrefab, root);
             //for (int i = 0; i < GameManager._packs[i]; i++)
-            for (int i = 0; i < GetComponent<GameManager>()._packs[i].size; i++)
+            //for (int i = 0; i < GetComponent<GameManager>()._packs[i].); i++)
+            foreach (var pack in GetComponent<GameManager>()._packs) //pack - тип CardPackConfiguration
             {
-
+                arrayCards = pack.UnionProperties(arrayCards);
+                foreach (var card in arrayCards)
+                {
+                    _choiceDeck[_pos,_cos] = Instantiate(GetComponent<GameManager>()._cardPrefab, _positions[_pos]);
+                    var newMat = new Material(_baseMat)
+                    {
+                        mainTexture = card.Texture
+                    };
+                    _choiceDeck[_pos, _cos].Configuration(card, newMat, CardUtility.GetDescriptionById(card.Id));
+                    _pos++;
+                    //Debug.Log(card.Name);
+                }
+                _pos = 0;
+                _cos++;
             }
         }
 
@@ -29,9 +47,12 @@ namespace Cards
 
         private void Awake()
         {
-            _choiceDeck = new Card[_positions.Length];
+            _baseMat = new Material(Shader.Find("TextMeshPro/Sprite"));
+            _baseMat.renderQueue = 2995;
+            ShowPack();
         }
 
+        /*
         public bool SetNewCard(Card newCard)
         {
             var result = GetLastPosition();
@@ -56,6 +77,6 @@ namespace Cards
             return -1;
         }
 
-
+        */
     }
 }

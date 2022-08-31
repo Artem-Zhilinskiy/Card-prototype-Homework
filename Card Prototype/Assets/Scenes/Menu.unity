@@ -5949,6 +5949,7 @@ GameObject:
   - component: {fileID: 1808446044}
   - component: {fileID: 1808446043}
   - component: {fileID: 1808446047}
+  - component: {fileID: 1808446048}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -6059,6 +6060,54 @@ MonoBehaviour:
   - {fileID: 696242364}
   - {fileID: 1530507821}
   - {fileID: 1049672248}
+--- !u!114 &1808446048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808446042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050f7c9fc43d15b42b8153cd83bee7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _packs:
+  - {fileID: 11400000, guid: 55dbf4c3fc0b44d43bc5d90dce9070bc, type: 2}
+  - {fileID: 11400000, guid: 42ffdb3326ce897459155355d37808fd, type: 2}
+  - {fileID: 11400000, guid: a8e853945eaef0444b396742ee18c374, type: 2}
+  - {fileID: 11400000, guid: 89d7571129eb5cf48a0d841efa74bdeb, type: 2}
+  - {fileID: 11400000, guid: 3229ff84acff46246a9bd0591a1ab7f6, type: 2}
+  - {fileID: 11400000, guid: cb7286cd1080bf04cbbf4a2265e52f38, type: 2}
+  - {fileID: 11400000, guid: 93d377064370f4443970eeb9769fd723, type: 2}
+  - {fileID: 11400000, guid: 34cdc96db83fac34d9c5de82e070330a, type: 2}
+  - {fileID: 11400000, guid: bacc7065c9d8cc34797a83eab6eab741, type: 2}
+  - {fileID: 11400000, guid: 25205717e71de4647a8cda8d1a255e08, type: 2}
+  - {fileID: 11400000, guid: 19b164fd490dc9a4f8d7fa24cd08a67d, type: 2}
+  - {fileID: 11400000, guid: 43eee8fa12f59f04387c4f74daa482fa, type: 2}
+  - {fileID: 11400000, guid: a7da7fe3b7207324abf0338fd84a4ba2, type: 2}
+  - {fileID: 11400000, guid: eca2d84b62e948b4b9ae70c928f82ac4, type: 2}
+  - {fileID: 11400000, guid: dfad8a04edd61274ea9a5b18ea36e3ba, type: 2}
+  - {fileID: 11400000, guid: 44a0ab9a4374c3440942746469ce09bc, type: 2}
+  - {fileID: 11400000, guid: a47a7cc582590644f80c83c185d95e8e, type: 2}
+  - {fileID: 11400000, guid: 28196ff321f36664cadd7463f1c41bfa, type: 2}
+  - {fileID: 11400000, guid: 8eb5aaeb22114204faaef6f103e75b7b, type: 2}
+  - {fileID: 11400000, guid: a4d2475feff1c0a499ce38ee06d27bd5, type: 2}
+  - {fileID: 11400000, guid: e0c2fe2e0c623dc4ca850148fcb01643, type: 2}
+  - {fileID: 11400000, guid: 186a12988a19d1b4abfe7e19f5df863e, type: 2}
+  - {fileID: 11400000, guid: c730f8af152c6df469a6d82a4e6b96a5, type: 2}
+  - {fileID: 11400000, guid: c26f21815c477c747954972d7e932459, type: 2}
+  - {fileID: 11400000, guid: 3199e294d6390814faf1e5efd5a89757, type: 2}
+  - {fileID: 11400000, guid: 9bdeb58e5c872d94fbaf154666c9e36f, type: 2}
+  - {fileID: 11400000, guid: 84e2ca5aec442264e988005eb7127e81, type: 2}
+  - {fileID: 11400000, guid: 380abf8f556bbc249a579112adf53824, type: 2}
+  - {fileID: 11400000, guid: d8a9f70b1c3691c43b6c500b35c1ee73, type: 2}
+  _cardPrefab: {fileID: 860988157, guid: 1efffdaff08b40c44aa84086651f4a25, type: 3}
+  _playerHand1: {fileID: 0}
+  _player1DeckRoot: {fileID: 0}
+  _playerHand2: {fileID: 0}
+  _player2DeckRoot: {fileID: 0}
+  _cardDeckCount: 30
 --- !u!1 &1810648263
 GameObject:
   m_ObjectHideFlags: 0
@@ -6282,7 +6331,6 @@ GameObject:
   - component: {fileID: 1888546530}
   - component: {fileID: 1888546529}
   - component: {fileID: 1888546528}
-  - component: {fileID: 1888546532}
   m_Layer: 0
   m_Name: DeckTable
   m_TagString: Untagged
@@ -6365,54 +6413,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &1888546532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1888546527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050f7c9fc43d15b42b8153cd83bee7dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _packs:
-  - {fileID: 11400000, guid: 55dbf4c3fc0b44d43bc5d90dce9070bc, type: 2}
-  - {fileID: 11400000, guid: 42ffdb3326ce897459155355d37808fd, type: 2}
-  - {fileID: 11400000, guid: a8e853945eaef0444b396742ee18c374, type: 2}
-  - {fileID: 11400000, guid: 89d7571129eb5cf48a0d841efa74bdeb, type: 2}
-  - {fileID: 11400000, guid: 3229ff84acff46246a9bd0591a1ab7f6, type: 2}
-  - {fileID: 11400000, guid: cb7286cd1080bf04cbbf4a2265e52f38, type: 2}
-  - {fileID: 11400000, guid: 93d377064370f4443970eeb9769fd723, type: 2}
-  - {fileID: 11400000, guid: 34cdc96db83fac34d9c5de82e070330a, type: 2}
-  - {fileID: 11400000, guid: bacc7065c9d8cc34797a83eab6eab741, type: 2}
-  - {fileID: 11400000, guid: 25205717e71de4647a8cda8d1a255e08, type: 2}
-  - {fileID: 11400000, guid: 19b164fd490dc9a4f8d7fa24cd08a67d, type: 2}
-  - {fileID: 11400000, guid: 43eee8fa12f59f04387c4f74daa482fa, type: 2}
-  - {fileID: 11400000, guid: a7da7fe3b7207324abf0338fd84a4ba2, type: 2}
-  - {fileID: 11400000, guid: eca2d84b62e948b4b9ae70c928f82ac4, type: 2}
-  - {fileID: 11400000, guid: dfad8a04edd61274ea9a5b18ea36e3ba, type: 2}
-  - {fileID: 11400000, guid: 44a0ab9a4374c3440942746469ce09bc, type: 2}
-  - {fileID: 11400000, guid: a47a7cc582590644f80c83c185d95e8e, type: 2}
-  - {fileID: 11400000, guid: 28196ff321f36664cadd7463f1c41bfa, type: 2}
-  - {fileID: 11400000, guid: 8eb5aaeb22114204faaef6f103e75b7b, type: 2}
-  - {fileID: 11400000, guid: a4d2475feff1c0a499ce38ee06d27bd5, type: 2}
-  - {fileID: 11400000, guid: e0c2fe2e0c623dc4ca850148fcb01643, type: 2}
-  - {fileID: 11400000, guid: 186a12988a19d1b4abfe7e19f5df863e, type: 2}
-  - {fileID: 11400000, guid: c730f8af152c6df469a6d82a4e6b96a5, type: 2}
-  - {fileID: 11400000, guid: c26f21815c477c747954972d7e932459, type: 2}
-  - {fileID: 11400000, guid: 3199e294d6390814faf1e5efd5a89757, type: 2}
-  - {fileID: 11400000, guid: 9bdeb58e5c872d94fbaf154666c9e36f, type: 2}
-  - {fileID: 11400000, guid: 84e2ca5aec442264e988005eb7127e81, type: 2}
-  - {fileID: 11400000, guid: 380abf8f556bbc249a579112adf53824, type: 2}
-  - {fileID: 11400000, guid: d8a9f70b1c3691c43b6c500b35c1ee73, type: 2}
-  _cardPrefab: {fileID: 860988157, guid: 1efffdaff08b40c44aa84086651f4a25, type: 3}
-  _playerHand1: {fileID: 0}
-  _player1DeckRoot: {fileID: 0}
-  _playerHand2: {fileID: 0}
-  _player2DeckRoot: {fileID: 0}
-  _cardDeckCount: 30
 --- !u!1 &1901701631
 GameObject:
   m_ObjectHideFlags: 0

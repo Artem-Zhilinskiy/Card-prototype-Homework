@@ -16,7 +16,8 @@ namespace Cards.ScriptableObjects
 		[SerializeField]
 		private ushort _cost;
 		[SerializeField, OneLine(Header = LineHeader.Short)]
-		private CardPropertiesData[] _cards;
+		public CardPropertiesData[] _cards;
+		//public CardPropertiesData[] _cards { get; private set; }
 
 		public IEnumerable<CardPropertiesData> UnionProperties(IEnumerable<CardPropertiesData> array)
 		{
