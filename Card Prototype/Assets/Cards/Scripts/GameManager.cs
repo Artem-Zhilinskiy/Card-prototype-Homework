@@ -16,11 +16,9 @@ namespace Cards
         private Card[] _player2Deck;
 
         [SerializeField]
-        //private CardPackConfiguration[] _packs;
-        public CardPackConfiguration[] _packs;
+        private CardPackConfiguration[] _packs;
         [SerializeField]
-        //public Card _cardPrefab { get; private set; }
-        public Card _cardPrefab;
+        private Card _cardPrefab;
 
         [SerializeField, Space]
         private PlayerHand _playerHand1;

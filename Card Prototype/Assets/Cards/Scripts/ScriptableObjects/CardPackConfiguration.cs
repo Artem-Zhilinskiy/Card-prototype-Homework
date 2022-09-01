@@ -26,6 +26,13 @@ namespace Cards.ScriptableObjects
 			return array.Union(_cards);
 		}
 
+		public IEnumerable<CardPropertiesData> ReplaceProperties(IEnumerable<CardPropertiesData> array)
+		{
+			TryToContruct();
+
+			return _cards;
+		}
+
 		private void TryToContruct()
 		{
 			for(int i = 0; i < _cards.Length; i++)
