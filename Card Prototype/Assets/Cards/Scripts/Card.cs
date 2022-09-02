@@ -82,11 +82,14 @@ namespace Cards
             switch (State)
             {
                 case CardStateType.InDeck:
+                    Debug.Log(State);
                     break;
                 case CardStateType.InHand:
                     transform.localScale /= c_scaleMult;
+                    Debug.Log(State);
                     break;
                 case CardStateType.OnTable:
+                    Debug.Log(State);
                     break;
             }
         }

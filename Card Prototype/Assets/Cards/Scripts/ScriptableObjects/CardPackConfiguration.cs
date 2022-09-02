@@ -12,7 +12,7 @@ namespace Cards.ScriptableObjects
 	public class CardPackConfiguration : ScriptableObject
 	{
 		[SerializeField]
-		private SideType _sideType;
+		public SideType _sideType;
 		[SerializeField]
 		private ushort _cost;
 		[SerializeField, OneLine(Header = LineHeader.Short)]
