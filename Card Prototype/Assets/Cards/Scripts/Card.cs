@@ -65,6 +65,7 @@ namespace Cards
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            Debug.Log("OnPointerEnter");
             switch (State)
             {
                 case CardStateType.InDeck:
@@ -82,14 +83,11 @@ namespace Cards
             switch (State)
             {
                 case CardStateType.InDeck:
-                    Debug.Log(State);
                     break;
                 case CardStateType.InHand:
                     transform.localScale /= c_scaleMult;
-                    Debug.Log(State);
                     break;
                 case CardStateType.OnTable:
-                    Debug.Log(State);
                     break;
             }
         }
