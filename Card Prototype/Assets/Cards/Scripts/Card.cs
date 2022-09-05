@@ -65,7 +65,6 @@ namespace Cards
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("OnPointerEnter");
             switch (State)
             {
                 case CardStateType.InDeck:

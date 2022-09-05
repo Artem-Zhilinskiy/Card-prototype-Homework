@@ -48,7 +48,7 @@ namespace Cards
                     _choiceDeck[_pos, _cos].transform.localPosition = vector;
                     //_choiceDeck[_pos, _cos].transform.Rotate(180.0f, 180.0f, 0.0f, Space.Self); //разворачиваю лицом к игроку
                     _choiceDeck[_pos, _cos].State = CardStateType.InHand;//Для возможности скалирования
-                    Debug.Log(_choiceDeck[_pos, _cos].State);
+                    //Debug.Log(_choiceDeck[_pos, _cos].State);
                     _choiceDeck[_pos, _cos].transform.gameObject.SetActive(false); //отключаю видимость
                     var newMat = new Material(_baseMat)
                     {
@@ -107,5 +107,35 @@ namespace Cards
                 //Debug.Log(card.Name);
             }
         }
+
+        #region Блок показа и скрытия карт
+
+        public void ShowCostPack(int _cost)
+        {
+            //Отключить все карты
+            DisableAllCards();
+            //Включить карты одной стоимости
+            for (int pos=0; pos<8; pos++)
+            {
+                if (_choiceDeck[pos, _cost - 1] != null)
+                {
+                    _choiceDeck[pos, _cost - 1].transform.gameObject.SetActive(true);
+                }
+            }
+        }
+
+        private void DisableAllCards()
+        {
+            foreach(var card in _choiceDeck)
+            {
+                if (card != null)
+                {
+                    card.transform.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        #endregion
+
     }
 }
