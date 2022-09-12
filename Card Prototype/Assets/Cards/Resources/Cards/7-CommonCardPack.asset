@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4cf6de20b2646f4193e999d2dee71e4, type: 3}
   m_Name: 7-CommonCardPack
   m_EditorClassIdentifier: 
-  _sideType: 1
+  _sideType: 0
   _cost: 7
   _cards:
   - Id: 701

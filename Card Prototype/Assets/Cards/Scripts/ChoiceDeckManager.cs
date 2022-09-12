@@ -27,6 +27,11 @@ namespace Cards
 
         private SideType _hero; //Выбор героя
 
+        [SerializeField]
+        private GameObject _panelHero;
+        [SerializeField]
+        private GameObject _panelCards;
+
         //Метод выкладывания на стол карт из выбранного набора
         //1. Создать через Instantiate(что и где)
         //2. Переопределить её место?
@@ -36,7 +41,7 @@ namespace Cards
         {
             var vector = _positions[0].transform.localPosition;
             IEnumerable<CardPropertiesData> arrayCards = new List<CardPropertiesData>(); //Создаётся массив со структурой карты
-            for (int i=0; i<7;i++) 
+            for (int i = 0; i < 7; i++)
             {
                 arrayCards = _packs[i].ReplaceProperties(arrayCards);
                 _packCards = new List<CardPropertiesData>(arrayCards); // Почему-то массив переприсваивается?
@@ -44,7 +49,7 @@ namespace Cards
                 {
                     vector = _positions[_pos].transform.localPosition;
                     vector += Vector3.up;
-                    _choiceDeck[_pos,_cos] = Instantiate(_cardPrefab, _deck);
+                    _choiceDeck[_pos, _cos] = Instantiate(_cardPrefab, _deck);
                     _choiceDeck[_pos, _cos].transform.localPosition = vector;
                     //_choiceDeck[_pos, _cos].transform.Rotate(180.0f, 180.0f, 0.0f, Space.Self); //разворачиваю лицом к игроку
                     _choiceDeck[_pos, _cos].State = CardStateType.InHand;//Для возможности скалирования
@@ -69,13 +74,13 @@ namespace Cards
             _baseMat.renderQueue = 2995;
             //Выкладка общих карт
             ShowPack();
-            //Выкладка классовых карт
-            ShowClassPack((SideType)4); //Выбор класса захардкоден. Сделать сцену с выбором героя.
         }
 
         //метод выкладки классовых карт
-        private void ShowClassPack(SideType _hero)
+        //public void ShowClassPack(SideType _hero)
+        public void SetClassPack(int h)
         {
+            _hero = TranslateIntToSideType(h);
             IEnumerable<CardPropertiesData> arrayCards = new List<CardPropertiesData>();
             foreach (var pack in _packs)
             {
@@ -106,6 +111,7 @@ namespace Cards
                 _pos++;
                 //Debug.Log(card.Name);
             }
+            PanelTrigger();
         }
 
         #region Блок показа и скрытия карт
@@ -115,7 +121,7 @@ namespace Cards
             //Отключить все карты
             DisableAllCards();
             //Включить карты одной стоимости
-            for (int pos=0; pos<8; pos++)
+            for (int pos = 0; pos < 8; pos++)
             {
                 if (_choiceDeck[pos, _cost - 1] != null)
                 {
@@ -124,9 +130,23 @@ namespace Cards
             }
         }
 
+        public void ShowClassPack()
+        {
+            //Отключить все карты
+            DisableAllCards();
+            //Включить карты одной стоимости
+            for (int pos = 0; pos < 8; pos++)
+            {
+                if (_choiceDeck[pos,7] != null)
+                {
+                    _choiceDeck[pos, 7].transform.gameObject.SetActive(true);
+                }
+            }
+        }
+
         private void DisableAllCards()
         {
-            foreach(var card in _choiceDeck)
+            foreach (var card in _choiceDeck)
             {
                 if (card != null)
                 {
@@ -137,5 +157,33 @@ namespace Cards
 
         #endregion
 
+        //Метод переключения панелей
+        public void PanelTrigger()
+        {
+            _panelHero.SetActive(false);
+            _panelCards.SetActive(true);
+        }
+
+        private SideType TranslateIntToSideType(int h)
+        {
+            switch (h)
+            {
+                case 1:
+                    return SideType.Mage;
+                    break;
+                case 2:
+                    return SideType.Warrior;
+                    break;
+                case 3:
+                    return SideType.Priest;
+                    break;
+                case 4:
+                    return SideType.Hunter;
+                    break;
+                default:
+                    return SideType.Common;
+                    break;
+            }
+        }
     }
 }

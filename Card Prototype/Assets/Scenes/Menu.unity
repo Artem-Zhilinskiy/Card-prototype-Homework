@@ -2269,7 +2269,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -287, y: 97.08099}
+  m_AnchoredPosition: {x: 276, y: 107}
   m_SizeDelta: {x: 147.34534, y: 144.5524}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &441469801
@@ -2580,7 +2580,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 551795640}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1808446047}
+        m_MethodName: ShowClassPack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &551795640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2699,7 +2710,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 611698168}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1808446047}
+        m_MethodName: SetClassPack
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &611698168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4251,7 +4273,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 262, y: 95}
+  m_AnchoredPosition: {x: -299, y: 96}
   m_SizeDelta: {x: 148.52902, y: 141.46912}
   m_Pivot: {x: 0.43624833, y: 0.42469966}
 --- !u!114 &1026946818
@@ -4370,7 +4392,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -283.86, y: 2.6029968}
+  m_AnchoredPosition: {x: 279.14, y: 12.522003}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1088521723
@@ -4415,7 +4437,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1088521724}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1808446047}
+        m_MethodName: SetClassPack
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1088521724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4755,7 +4788,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1408961372}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1808446047}
+        m_MethodName: SetClassPack
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1408961372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6487,6 +6531,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 380abf8f556bbc249a579112adf53824, type: 2}
   - {fileID: 11400000, guid: d8a9f70b1c3691c43b6c500b35c1ee73, type: 2}
   _cardPrefab: {fileID: 1875866477}
+  _panelHero: {fileID: 1926907492}
+  _panelCards: {fileID: 1901701631}
 --- !u!1 &1810648263
 GameObject:
   m_ObjectHideFlags: 0
@@ -6523,7 +6569,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 271.46997, y: 2.6029968}
+  m_AnchoredPosition: {x: -289.53003, y: 3.6029973}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1810648265
@@ -6568,7 +6614,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1810648266}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1808446047}
+        m_MethodName: SetClassPack
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1810648266
 MonoBehaviour:
   m_ObjectHideFlags: 0
