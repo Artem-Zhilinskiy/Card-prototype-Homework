@@ -52,7 +52,7 @@ namespace Cards
                     _choiceDeck[_pos, _cos] = Instantiate(_cardPrefab, _deck);
                     _choiceDeck[_pos, _cos].transform.localPosition = vector;
                     //_choiceDeck[_pos, _cos].transform.Rotate(180.0f, 180.0f, 0.0f, Space.Self); //разворачиваю лицом к игроку
-                    _choiceDeck[_pos, _cos].State = CardStateType.InHand;//Для возможности скалирования
+                    _choiceDeck[_pos, _cos].State = CardStateType.OnChoiceDeck;//Для возможности скалирования
                     //Debug.Log(_choiceDeck[_pos, _cos].State);
                     _choiceDeck[_pos, _cos].transform.gameObject.SetActive(false); //отключаю видимость
                     var newMat = new Material(_baseMat)
@@ -100,7 +100,7 @@ namespace Cards
                 vector = _positions[_pos].transform.localPosition;
                 _choiceDeck[_pos, _cos] = Instantiate(_cardPrefab, _deck);
                 _choiceDeck[_pos, _cos].transform.localPosition = vector;
-                _choiceDeck[_pos, _cos].State = CardStateType.InHand;//Для возможности скалирования
+                _choiceDeck[_pos, _cos].State = CardStateType.OnChoiceDeck;//Для возможности скалирования
                 //_choiceDeck[_pos, _cos].transform.Rotate(180.0f, 180.0f, 0.0f, Space.Self); //разворачиваю лицом к игроку
                 _choiceDeck[_pos, _cos].transform.gameObject.SetActive(false); //отключаю видимость
                 var newMat = new Material(_baseMat)
@@ -183,6 +183,19 @@ namespace Cards
                 default:
                     return SideType.Common;
                     break;
+            }
+        }
+
+        public void PlayButton()
+        {
+            if (GameManager._koloda.Count == 30)
+            {
+                // Запись _koloda и _hero в PlayerPrefs
+                //Переход в другую сцену
+            }
+            else
+            {
+                Debug.Log("Для того, чтобы начать игру, наберите колоду из 30 карт. Сейчас выбрано " + GameManager._koloda.Count);
             }
         }
     }

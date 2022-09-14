@@ -27,6 +27,7 @@ namespace Cards
 		InDeck,
 		InHand,
 		OnTable,
-		Discard
+		Discard,
+		OnChoiceDeck
     }
 }

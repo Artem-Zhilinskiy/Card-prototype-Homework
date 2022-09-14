@@ -33,6 +33,9 @@ namespace Cards
         [SerializeField, Space, Range(0f, 200f)]
         private int _cardDeckCount = 30;
 
+        //Объявление списка ID карт для формирования колоды
+        public static List<uint> _koloda = new List<uint>(30);
+
         private void Awake()
         {
             IEnumerable<CardPropertiesData> arrayCards = new List<CardPropertiesData>(); //Создаётся массив со структурой карты

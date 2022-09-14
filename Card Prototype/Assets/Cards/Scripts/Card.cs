@@ -27,6 +27,8 @@ namespace Cards
         [SerializeField]
         private TextMeshPro _type;
 
+        private uint _ID; // Для сохранения id карты и передачи её из сцены выбора в сцену игры
+
         public CardStateType State {get; set;}
 
         public bool IsFrontSide => _frontCard.activeSelf;
@@ -40,6 +42,8 @@ namespace Cards
             _attack.text = data.Attack.ToString();
             _health.text = data.Health.ToString();
             _type.text = CardUnitType.None == data.Type ? "" : data.Type.ToString();
+            //Сохранение id карты для формирования игровой колоды в сцене выбора
+            _ID = data.Id;
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -60,7 +64,26 @@ namespace Cards
             //Если ход не ваш, то ничего не происходит.
             // Если ход ваш, то она у вас начинает двигаться
             //А двигается она через OnDrag
-            throw new System.NotImplementedException();
+            switch (State)
+            {
+                case CardStateType.OnChoiceDeck:
+                    //Debug.Log("Щелчок по карте " + _ID);
+                    if (GameManager._koloda.Count >=30 )
+                    {
+                        Debug.Log("Колода заполнена, добавление невозможно");
+                    }
+                    else if (GameManager._koloda.Contains(_ID))
+                    {
+                        GameManager._koloda.Remove(_ID);
+                        Debug.Log(GameManager._koloda.Count);
+                    }
+                    else
+                    {
+                        GameManager._koloda.Add(_ID);
+                        Debug.Log(GameManager._koloda.Count);
+                    }
+                    break;
+            }
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -73,6 +96,9 @@ namespace Cards
                     transform.localScale *= c_scaleMult;
                     break;
                 case CardStateType.OnTable:
+                    break;
+                case CardStateType.OnChoiceDeck:
+                    transform.localScale *= c_scaleMult;
                     break;
             }
         }
@@ -88,12 +114,15 @@ namespace Cards
                     break;
                 case CardStateType.OnTable:
                     break;
+                case CardStateType.OnChoiceDeck:
+                    transform.localScale /= c_scaleMult;
+                    break;
             }
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         [ContextMenu ("Switch Enable")]
