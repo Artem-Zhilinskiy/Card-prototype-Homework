@@ -43,6 +43,8 @@ namespace Cards
             _allCards = new List<CardPropertiesData>(arrayCards); // Почему-то массив переприсваивается?
             _baseMat = new Material(Shader.Find("TextMeshPro/Sprite"));
             _baseMat.renderQueue = 2995;
+            //Проверка типа героя и выставление соответствующей герою картинки
+            HeroCheck();
         }
 
         private void Start()
@@ -90,6 +92,26 @@ namespace Cards
                 deck[i].Configuration(random, newMat, CardUtility.GetDescriptionById(random.Id));
             }
             return deck;
+        }
+
+        private void HeroCheck()
+        {
+            int _heroType = PlayerPrefs.GetInt("hero", 1);
+            switch (_heroType)
+            {
+                case 1:
+                    Debug.Log("Mage");
+                    break;
+                case 2:
+                    Debug.Log("Warrior");
+                    break;
+                case 3:
+                    Debug.Log("Priest");
+                    break;
+                case 4:
+                    Debug.Log("Hunter");
+                    break;
+            }
         }
     }
 }

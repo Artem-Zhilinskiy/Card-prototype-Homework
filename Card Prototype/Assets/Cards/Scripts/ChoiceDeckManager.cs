@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cards.ScriptableObjects;
+using UnityEngine.SceneManagement;
 
 namespace Cards
 {
@@ -80,6 +81,9 @@ namespace Cards
         //public void ShowClassPack(SideType _hero)
         public void SetClassPack(int h)
         {
+            //Сохранение типа героя для передачи в игровую сцену
+            PlayerPrefs.SetInt("hero", h);
+            //Заполнение массива классовыми картами
             _hero = TranslateIntToSideType(h);
             IEnumerable<CardPropertiesData> arrayCards = new List<CardPropertiesData>();
             foreach (var pack in _packs)
@@ -188,15 +192,19 @@ namespace Cards
 
         public void PlayButton()
         {
+            SceneManager.LoadScene("GameTable");
+            /*
             if (GameManager._koloda.Count == 30)
             {
                 // Запись _koloda и _hero в PlayerPrefs
                 //Переход в другую сцену
+                SceneManager.LoadScene("GameTable");
             }
             else
             {
                 Debug.Log("Для того, чтобы начать игру, наберите колоду из 30 карт. Сейчас выбрано " + GameManager._koloda.Count);
             }
+            */
         }
     }
 }
