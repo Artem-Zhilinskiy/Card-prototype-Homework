@@ -33,6 +33,10 @@ namespace Cards
         [SerializeField, Space, Range(0f, 200f)]
         private int _cardDeckCount = 30;
 
+        //Картинка игрока
+        [SerializeField]
+        private Transform _heroPicture;
+
         //Объявление списка ID карт для формирования колоды
         public static List<uint> _koloda = new List<uint>(30);
 
@@ -45,6 +49,8 @@ namespace Cards
             _baseMat.renderQueue = 2995;
             //Проверка типа героя и выставление соответствующей герою картинки
             HeroCheck();
+            //Отладка карт колоды
+            KolodaCheck();
         }
 
         private void Start()
@@ -101,6 +107,7 @@ namespace Cards
             {
                 case 1:
                     Debug.Log("Mage");
+                    //_heroPicture.shader
                     break;
                 case 2:
                     Debug.Log("Warrior");
@@ -111,6 +118,14 @@ namespace Cards
                 case 4:
                     Debug.Log("Hunter");
                     break;
+            }
+        }
+
+        private void KolodaCheck()
+        {
+            foreach (var i in _koloda)
+            {
+                Debug.Log(i);
             }
         }
     }

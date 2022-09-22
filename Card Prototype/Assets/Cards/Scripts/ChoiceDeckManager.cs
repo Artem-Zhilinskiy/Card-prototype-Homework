@@ -192,11 +192,10 @@ namespace Cards
 
         public void PlayButton()
         {
-            SceneManager.LoadScene("GameTable");
-            /*
             if (GameManager._koloda.Count == 30)
             {
                 // Запись _koloda и _hero в PlayerPrefs
+                //KolodaToPrefs();
                 //Переход в другую сцену
                 SceneManager.LoadScene("GameTable");
             }
@@ -204,7 +203,6 @@ namespace Cards
             {
                 Debug.Log("Для того, чтобы начать игру, наберите колоду из 30 карт. Сейчас выбрано " + GameManager._koloda.Count);
             }
-            */
         }
     }
 }

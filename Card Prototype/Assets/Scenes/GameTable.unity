@@ -1825,6 +1825,7 @@ MonoBehaviour:
   _playerHand2: {fileID: 2079049164}
   _player2DeckRoot: {fileID: 165638368}
   _cardDeckCount: 30
+  _heroPicture: {fileID: 1906621228}
 --- !u!114 &1022456748
 MonoBehaviour:
   m_ObjectHideFlags: 0
