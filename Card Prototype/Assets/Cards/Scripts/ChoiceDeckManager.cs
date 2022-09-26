@@ -193,6 +193,7 @@ namespace Cards
         public void PlayButton()
         {
             if (GameManager._koloda.Count == 30)
+            //if (true)
             {
                 // Запись _koloda и _hero в PlayerPrefs
                 //KolodaToPrefs();

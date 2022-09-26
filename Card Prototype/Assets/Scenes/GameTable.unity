@@ -1826,6 +1826,10 @@ MonoBehaviour:
   _player2DeckRoot: {fileID: 165638368}
   _cardDeckCount: 30
   _heroPicture: {fileID: 1906621228}
+  _mageMat: {fileID: 2100000, guid: 96f1efd130eb66d4a839e8736c354f97, type: 2}
+  _warriorMat: {fileID: 2100000, guid: d029fbf9a9af4ed4a85df9bbfc48329d, type: 2}
+  _priestMat: {fileID: 2100000, guid: 8be2c36ee9d7be7488d4403b9cc607cf, type: 2}
+  _hunterMat: {fileID: 2100000, guid: 56030ce955cfb1247ab0d7dab563ee3d, type: 2}
 --- !u!114 &1022456748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3184,7 +3188,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8be2c36ee9d7be7488d4403b9cc607cf, type: 2}
+  - {fileID: 2100000, guid: 96f1efd130eb66d4a839e8736c354f97, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3221,7 +3225,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1906621224}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -440, y: 0, z: -144}
+  m_LocalPosition: {x: -440, y: 5, z: -144}
   m_LocalScale: {x: 100, y: 1, z: 100}
   m_Children:
   - {fileID: 97191394}

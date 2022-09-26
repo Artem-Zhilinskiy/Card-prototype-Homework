@@ -36,6 +36,19 @@ namespace Cards
         //Картинка игрока
         [SerializeField]
         private Transform _heroPicture;
+        //Материалы для картинок игрока
+        //Материал мага
+        [SerializeField]
+        private Material _mageMat;
+        //Материал виона
+        [SerializeField]
+        private Material _warriorMat;
+        //Материал священника
+        [SerializeField]
+        private Material  _priestMat;
+        //Материал охотника
+        [SerializeField]
+        private Material _hunterMat;
 
         //Объявление списка ID карт для формирования колоды
         public static List<uint> _koloda = new List<uint>(30);
@@ -49,13 +62,12 @@ namespace Cards
             _baseMat.renderQueue = 2995;
             //Проверка типа героя и выставление соответствующей герою картинки
             HeroCheck();
-            //Отладка карт колоды
-            KolodaCheck();
         }
 
         private void Start()
         {
-            _player1Deck = CreateDeck(_player1DeckRoot);
+            ShuffleDeck(_koloda);
+            _player1Deck = CreateChosenDeck(_player1DeckRoot);
             _player2Deck = CreateDeck(_player2DeckRoot);
         }
 
@@ -100,32 +112,80 @@ namespace Cards
             return deck;
         }
 
+        private Card[] CreateChosenDeck(Transform root)
+        {
+            //Переделанный набор колоды из выбранных в предыдущей сцене
+            var deck = new Card[_cardDeckCount]; //Содаётся массив вместимостью 30
+            var vector = Vector3.zero; //Определяестся нулевой вектор
+            for (int i = 0; i < _cardDeckCount; i++) //Цикл от 0 до 30
+            {
+                deck[i] = Instantiate(_cardPrefab, root); //Создаётся префаб карты в заданном через инспектор месте
+                deck[i].transform.localPosition = vector; //Переопредление места карты
+                //if (deck[i].IsFrontSide) deck[i].SwitchEnable(); 
+                vector += new Vector3(0f, c_stepCardInDeck, 0f); //Подъём места следующей карты
+
+                foreach (var card in _allCards)
+                {
+                    if ((uint)_koloda[i] == card.Id)
+                    {
+                        var newMat = new Material(_baseMat)
+                        {
+                            mainTexture = card.Texture
+                        };
+                        deck[i].Configuration(card, newMat, CardUtility.GetDescriptionById(card.Id));
+                    }
+                }
+            }
+            return deck;
+        }
+
         private void HeroCheck()
         {
             int _heroType = PlayerPrefs.GetInt("hero", 1);
             switch (_heroType)
             {
                 case 1:
-                    Debug.Log("Mage");
-                    //_heroPicture.shader
+                    //Debug.Log("Mage");
+                    _heroPicture.transform.GetComponent<MeshRenderer>().material = _mageMat;
                     break;
                 case 2:
-                    Debug.Log("Warrior");
+                    //Debug.Log("Warrior");
+                    _heroPicture.transform.GetComponent<MeshRenderer>().material = _warriorMat;
                     break;
                 case 3:
-                    Debug.Log("Priest");
+                    //Debug.Log("Priest");
+                    _heroPicture.transform.GetComponent<MeshRenderer>().material = _priestMat;
                     break;
                 case 4:
-                    Debug.Log("Hunter");
+                    //Debug.Log("Hunter");
+                    _heroPicture.transform.GetComponent<MeshRenderer>().material = _hunterMat;
                     break;
             }
         }
 
-        private void KolodaCheck()
+        private void ShuffleDeck(List<uint> _koloda)
         {
-            foreach (var i in _koloda)
+            int _randomNumber;
+            //Создаю массив случайных чисел от 1 до 30
+            List<int> _randomArray = new List<int>(_cardDeckCount);
+            for (int i = 0; i < _cardDeckCount;)
             {
-                Debug.Log(i);
+                _randomNumber = Random.Range(0, _cardDeckCount);
+                if (!_randomArray.Contains(_randomNumber))
+                {
+                    _randomArray.Add(_randomNumber);
+                    i++;
+                }
+            }
+            List<uint> _temp = new List<uint>(_cardDeckCount);
+            for (int i = 0; i < _cardDeckCount; i++)
+            {
+                _temp.Add(_koloda[_randomArray[i]]);
+                Debug.Log(_temp[i]);
+            }
+            for (int i = 0; i < _cardDeckCount; i++)
+            {
+               _koloda[i]=_temp[i];
             }
         }
     }
