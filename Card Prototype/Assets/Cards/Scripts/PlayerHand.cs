@@ -40,7 +40,7 @@ namespace Cards
             return -1;
         }
 
-        private IEnumerator MoveInHand(Card card, Transform parent)
+        public IEnumerator MoveInHand(Card card, Transform parent)
         {
             yield return UpCard(card);
             yield return RotateCard(card);

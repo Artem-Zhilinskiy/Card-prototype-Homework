@@ -53,6 +53,9 @@ namespace Cards
         //Объявление списка ID карт для формирования колоды
         public static List<uint> _koloda = new List<uint>(30);
 
+        //Флаг быстрого старта
+        public static bool _fastStart = false;
+
         private void Awake()
         {
             IEnumerable<CardPropertiesData> arrayCards = new List<CardPropertiesData>(); //Создаётся массив со структурой карты
@@ -66,8 +69,15 @@ namespace Cards
 
         private void Start()
         {
-            ShuffleDeck(_koloda);
-            _player1Deck = CreateChosenDeck(_player1DeckRoot);
+            if (_fastStart == true)
+            {
+                _player1Deck = CreateDeck(_player1DeckRoot);
+            }
+            else
+            {
+                ShuffleDeck(_koloda);
+                _player1Deck = CreateChosenDeck(_player1DeckRoot);
+            }
             _player2Deck = CreateDeck(_player2DeckRoot);
         }
 
@@ -75,6 +85,7 @@ namespace Cards
         {
             if(Input.GetKeyDown(KeyCode.Space))
             {
+                //Находит самую верхнюю на текущий момент карту в стопке
                 var index = _player1Deck.Length - 1;
                 for (int i = index; i >= 0; i--)
                 {
@@ -187,6 +198,20 @@ namespace Cards
             {
                _koloda[i]=_temp[i];
             }
+        }
+
+        //Опрделяет случайную карту в колоде первого игрока
+        private Card FindRandomCardInDeck()
+        {
+            var _randomCard = _player1Deck[Random.Range(0, _player1Deck.Length)];
+            return _randomCard;
+        }
+
+        public void ChangeCards(Card _card1)
+        {
+            var _card2 = FindRandomCardInDeck();
+            _playerHand1.MoveInHand(_card1, _card2.transform);
+            _playerHand1.MoveInHand(_card2, _card1.transform);
         }
     }
 }

@@ -205,5 +205,11 @@ namespace Cards
                 Debug.Log("Для того, чтобы начать игру, наберите колоду из 30 карт. Сейчас выбрано " + GameManager._koloda.Count);
             }
         }
+        //Случайное формирование колоды. Для отладки. Чтобы не выбирать каждый раз по 30 карт.
+        public void RandomButton()
+        {
+            GameManager._fastStart = true;
+            SceneManager.LoadScene("GameTable");
+        }
     }
 }

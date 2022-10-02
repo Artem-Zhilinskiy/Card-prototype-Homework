@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace Cards
 {
-    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler
+    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
     {
         private const float c_scaleMult = 2f;
 
@@ -29,9 +29,19 @@ namespace Cards
 
         private uint _ID; // Для сохранения id карты и передачи её из сцены выбора в сцену игры
 
+        //Переменная для поиска GameManager
+        private GameObject _cp;
+
+        //Флаг "была ли заменена" для выполнения требования 3 из ТЗ "Выбор стартовой руки: "Каждую карту можно заменить только раз"
+        private bool _wasChanged = false;
         public CardStateType State {get; set;}
 
         public bool IsFrontSide => _frontCard.activeSelf;
+
+        private void Awake()
+        {
+            _cp = GameObject.Find("CenterPoint");
+        }
 
         public void Configuration (CardPropertiesData data, Material picture, string description)
         {
@@ -132,6 +142,29 @@ namespace Cards
             var boolean = !IsFrontSide;
             _frontCard.SetActive(boolean);
             _picture.enabled = boolean;
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            switch (State)
+            {
+                case CardStateType.InDeck:
+                    break;
+                case CardStateType.InHand:
+                    if (eventData.button == PointerEventData.InputButton.Right)
+                    {
+                        _wasChanged = true; //Помечаем, что карта уже была заменена и больше её заменить нельзя
+                        Debug.Log("Замена карты");
+                        //Обмен карт
+                        _cp.GetComponent<GameManager>().ChangeCards(this);
+                    }
+                    break;
+                case CardStateType.OnTable:
+                    break;
+                case CardStateType.OnChoiceDeck:
+                    transform.localScale /= c_scaleMult;
+                    break;
+            }
         }
     }
 }
