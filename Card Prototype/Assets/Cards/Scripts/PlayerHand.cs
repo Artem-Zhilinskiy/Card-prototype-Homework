@@ -42,11 +42,11 @@ namespace Cards
 
         public IEnumerator MoveInHand(Card card, Transform parent)
         {
+            var startPos = card.transform.position;
+            var endPos = parent.position;
             yield return UpCard(card);
             yield return RotateCard(card);
             var time = 0f;
-            var startPos = card.transform.position;
-            var endPos = parent.position;
             while (time <1f)
             {
                 card.transform.position = Vector3.Lerp(startPos, endPos, time);
@@ -56,7 +56,15 @@ namespace Cards
             //Чтобы точно расположить карту на месте
             card.transform.position = endPos;
 
-            card.State = CardStateType.InHand;
+            switch (card.State)
+            {
+                case CardStateType.InDeck:
+                    card.State = CardStateType.InHand;
+                    break;
+                case CardStateType.InHand:
+                    card.State = CardStateType.InDeck;
+                    break;
+            }
         }
 
         private IEnumerator UpCard(Card card)
@@ -76,9 +84,16 @@ namespace Cards
         {
             var time = 0f;
             var startRot = card.transform.rotation;
-            var endRot = new Quaternion(0, 0, 0.1f, 0);
-            //var endRot = new Quaternion();
-            //endRot.eulerAngles = new Vector3(0, 0, 180);
+            //var endRot = new Quaternion(0, 0, 0.1f, 0);
+            var endRot = new Quaternion();
+            if (startRot.eulerAngles == new Vector3(0,0,0))
+            {
+                endRot.eulerAngles = new Vector3(0, 0, 180);
+            }
+            else
+            {
+                endRot.eulerAngles = new Vector3(0, 0, 0);
+            }
             while (time <= 1f)
             {
                 card.transform.rotation = Quaternion.Slerp(startRot, endRot, time);
@@ -86,6 +101,14 @@ namespace Cards
                 yield return null;
             }
             //endRot.eulerAngles = new Vector3(0, 0, 180);
+            if (startRot.eulerAngles == new Vector3(0, 0, 0))
+            {
+                endRot.eulerAngles = new Vector3(0, 0, 180);
+            }
+            else
+            {
+                endRot.eulerAngles = new Vector3(0, 0, 0);
+            }
             card.transform.rotation = endRot;
             yield return null;
         }

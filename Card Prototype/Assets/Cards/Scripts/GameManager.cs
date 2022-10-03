@@ -203,15 +203,30 @@ namespace Cards
         //Опрделяет случайную карту в колоде первого игрока
         private Card FindRandomCardInDeck()
         {
-            var _randomCard = _player1Deck[Random.Range(0, _player1Deck.Length)];
-            return _randomCard;
+            Card _resultRandomCard = null;
+            while (_resultRandomCard == null)
+            {
+                Card _randomCard = _player1Deck[Random.Range(0, _player1Deck.Length)];
+                if ((_randomCard != null) && (_randomCard.State == CardStateType.InDeck))
+                {
+                    _resultRandomCard = _randomCard;
+                    break;
+                }
+            }
+            if (_resultRandomCard == null)
+            {
+                Debug.Log("_resultRandomCard == null");
+            }
+            return _resultRandomCard;
         }
 
         public void ChangeCards(Card _card1)
         {
             var _card2 = FindRandomCardInDeck();
-            _playerHand1.MoveInHand(_card1, _card2.transform);
-            _playerHand1.MoveInHand(_card2, _card1.transform);
+            Transform _position1 = _card1.transform;
+            Transform _position2 = _card2.transform;
+            _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card2, _position1));
+            _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card1, _position2));
         }
     }
 }

@@ -153,10 +153,15 @@ namespace Cards
                 case CardStateType.InHand:
                     if (eventData.button == PointerEventData.InputButton.Right)
                     {
-                        _wasChanged = true; //Помечаем, что карта уже была заменена и больше её заменить нельзя
-                        Debug.Log("Замена карты");
-                        //Обмен карт
-                        _cp.GetComponent<GameManager>().ChangeCards(this);
+                        if (_wasChanged == false)
+                        {
+                            _wasChanged = true; //Помечаем, что карта уже была заменена и больше её заменить нельзя
+                            _cp.GetComponent<GameManager>().ChangeCards(this);
+                        }
+                        else
+                        {
+                            Debug.Log("Карта уже была заменена, повторная замена запрещена.");
+                        }
                     }
                     break;
                 case CardStateType.OnTable:
