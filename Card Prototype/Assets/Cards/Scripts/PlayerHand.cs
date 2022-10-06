@@ -12,7 +12,7 @@ namespace Cards
         [SerializeField]
         private Transform[] _positions;
 
-        private void Start()
+        private void Awake()
         {
             _cardsInHand = new Card[_positions.Length];
         }

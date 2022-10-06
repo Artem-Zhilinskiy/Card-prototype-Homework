@@ -167,7 +167,6 @@ namespace Cards
                 case CardStateType.OnTable:
                     break;
                 case CardStateType.OnChoiceDeck:
-                    transform.localScale /= c_scaleMult;
                     break;
             }
         }

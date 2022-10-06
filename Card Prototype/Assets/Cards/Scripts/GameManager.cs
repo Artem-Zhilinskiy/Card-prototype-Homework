@@ -65,10 +65,17 @@ namespace Cards
             _baseMat.renderQueue = 2995;
             //Проверка типа героя и выставление соответствующей герою картинки
             HeroCheck();
+            //Создание колод
+            //DeckCreation();
+            //Раздача 10 карт в начале игры
+            //InitialCardSetUp();
         }
 
         private void Start()
         {
+            DeckCreation();
+            InitialCardSetUp();
+            /*
             if (_fastStart == true)
             {
                 _player1Deck = CreateDeck(_player1DeckRoot);
@@ -79,6 +86,7 @@ namespace Cards
                 _player1Deck = CreateChosenDeck(_player1DeckRoot);
             }
             _player2Deck = CreateDeck(_player2DeckRoot);
+            */
         }
 
         private void Update()
@@ -227,6 +235,39 @@ namespace Cards
             Transform _position2 = _card2.transform;
             _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card2, _position1));
             _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card1, _position2));
+        }
+
+        //Первоначальная раздача 10 начальных карт
+        private void InitialCardSetUp()
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                var index = _player1Deck.Length - 1;
+                for (int i = index; i >= 0; i--)
+                {
+                    if (_player1Deck[i] != null)
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+                _playerHand1.SetNewCard(_player1Deck[index]);
+                _player1Deck[index] = null;
+            }
+        }
+
+        private void DeckCreation()
+        {
+            if (_fastStart == true)
+            {
+                _player1Deck = CreateDeck(_player1DeckRoot);
+            }
+            else
+            {
+                ShuffleDeck(_koloda);
+                _player1Deck = CreateChosenDeck(_player1DeckRoot);
+            }
+            _player2Deck = CreateDeck(_player2DeckRoot);
         }
     }
 }
