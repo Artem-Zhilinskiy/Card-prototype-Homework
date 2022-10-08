@@ -88,7 +88,7 @@ namespace Cards
             _player2Deck = CreateDeck(_player2DeckRoot);
             */
         }
-
+        /*
         private void Update()
         {
             if(Input.GetKeyDown(KeyCode.Space))
@@ -107,6 +107,7 @@ namespace Cards
                 _player1Deck[index] = null;
             }
         }
+        */
 
         private Card[] CreateDeck(Transform root)
         {

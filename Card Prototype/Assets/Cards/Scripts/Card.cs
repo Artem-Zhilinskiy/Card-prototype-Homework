@@ -61,6 +61,7 @@ namespace Cards
             switch (State)
             {
                 case CardStateType.InHand:
+                    Debug.Log("Dragging.");
                     break;
                 case CardStateType.OnTable:
                     break;
