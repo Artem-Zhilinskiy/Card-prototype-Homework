@@ -62,6 +62,7 @@ namespace Cards
             {
                 case CardStateType.InHand:
                     Debug.Log("Dragging.");
+                    transform.position = eventData.pointerCurrentRaycast.worldPosition;
                     break;
                 case CardStateType.OnTable:
                     break;
