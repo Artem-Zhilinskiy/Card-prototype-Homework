@@ -62,7 +62,11 @@ namespace Cards
             {
                 case CardStateType.InHand:
                     Debug.Log("Dragging.");
-                    transform.position = eventData.pointerCurrentRaycast.worldPosition;
+                    //transform.position = eventData.pointerCurrentRaycast.worldPosition;
+                    Vector3 _position = eventData.pointerCurrentRaycast.worldPosition;
+                    _position.y = 0;
+                    transform.position = _position;
+                    //transform.position = new Vector3(_position.x, 0, _position.y);
                     break;
                 case CardStateType.OnTable:
                     break;
@@ -106,6 +110,7 @@ namespace Cards
                     break;
                 case CardStateType.InHand:
                     transform.localScale *= c_scaleMult;
+                    Debug.Log("CardStateType.InHand" + "transform.localScale *= c_scaleMult");
                     break;
                 case CardStateType.OnTable:
                     break;
