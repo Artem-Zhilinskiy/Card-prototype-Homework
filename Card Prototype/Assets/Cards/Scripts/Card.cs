@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace Cards
 {
-    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
+    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler, IEndDragHandler
     {
         private const float c_scaleMult = 2f;
 
@@ -61,7 +61,7 @@ namespace Cards
             switch (State)
             {
                 case CardStateType.InHand:
-                    Debug.Log("Dragging.");
+                    //Debug.Log("Dragging.");
                     //transform.position = eventData.pointerCurrentRaycast.worldPosition;
                     Vector3 _position = eventData.pointerCurrentRaycast.worldPosition;
                     _position.y = 0;
@@ -71,6 +71,11 @@ namespace Cards
                 case CardStateType.OnTable:
                     break;
             }
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            Debug.Log("Бросание карты");
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -110,7 +115,6 @@ namespace Cards
                     break;
                 case CardStateType.InHand:
                     transform.localScale *= c_scaleMult;
-                    Debug.Log("CardStateType.InHand" + "transform.localScale *= c_scaleMult");
                     break;
                 case CardStateType.OnTable:
                     break;
