@@ -40,12 +40,18 @@ namespace Cards
             return -1;
         }
 
-        public IEnumerator MoveInHand(Card card, Transform parent)
+        public IEnumerator MoveInHand(Card card, Transform parent, bool _up, bool _rotate)
         {
             var startPos = card.transform.position;
             var endPos = parent.position;
-            yield return UpCard(card);
-            yield return RotateCard(card);
+            if (_up)
+            {
+                yield return UpCard(card);
+            }
+            if (_rotate)
+            {
+                yield return RotateCard(card);
+            }
             var time = 0f;
             while (time <1f)
             {

@@ -234,8 +234,13 @@ namespace Cards
             var _card2 = FindRandomCardInDeck();
             Transform _position1 = _card1.transform;
             Transform _position2 = _card2.transform;
-            _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card2, _position1));
-            _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card1, _position2));
+            _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card2, _position1, true, true));
+            _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card1, _position2, true, true));
+        }
+
+        public void RetrunCard (Card _card)
+        {
+            _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card, _position1, true, true));
         }
 
         //Первоначальная раздача 10 начальных карт

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace Cards
 {
-    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler, IEndDragHandler
+    public class Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler, IEndDragHandler, IBeginDragHandler
     {
         private const float c_scaleMult = 2f;
 
@@ -38,6 +38,8 @@ namespace Cards
 
         public bool IsFrontSide => _frontCard.activeSelf;
 
+        Vector3 _handPosition;
+
         private void Awake()
         {
             _cp = GameObject.Find("CenterPoint");
@@ -54,6 +56,11 @@ namespace Cards
             _type.text = CardUnitType.None == data.Type ? "" : data.Type.ToString();
             //Сохранение id карты для формирования игровой колоды в сцене выбора
             _ID = data.Id;
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            _handPosition = transform.position;
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -75,7 +82,17 @@ namespace Cards
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            Debug.Log("Бросание карты");
+            Debug.Log(transform.position.z);
+            Debug.Log("hand position " + _handPosition.z);
+            if(transform.position.z > -100)
+            {
+                transform.position = new Vector3(-340, 0, -52);
+                //_playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card2, _position1));
+            }
+            else if( transform.position.z<= -100)
+            {
+                transform.position = _handPosition;
+            }
         }
 
         public void OnPointerDown(PointerEventData eventData)
