@@ -27,7 +27,7 @@ namespace Cards
                 return false;
             }
             _cardsInHand[result] = newCard;
-            StartCoroutine(MoveInHand(newCard, _positions[result]));
+            StartCoroutine(MoveInHand(newCard, _positions[result], true, true));
             return true;
         }
 
@@ -54,6 +54,40 @@ namespace Cards
             }
             var time = 0f;
             while (time <1f)
+            {
+                card.transform.position = Vector3.Lerp(startPos, endPos, time);
+                time += Time.deltaTime;
+                yield return null;
+            }
+            //Чтобы точно расположить карту на месте
+            card.transform.position = endPos;
+
+            switch (card.State)
+            {
+                case CardStateType.InDeck:
+                    card.State = CardStateType.InHand;
+                    break;
+                case CardStateType.InHand:
+                    card.State = CardStateType.InDeck;
+                    break;
+            }
+        }
+
+        //Перегрузка метода MoveInHand с Vector3
+        public IEnumerator MoveInHand(Card card, Vector3 endPos, bool _up, bool _rotate)
+        {
+            var startPos = card.transform.position;
+            //var endPos = parent.position;
+            if (_up)
+            {
+                yield return UpCard(card);
+            }
+            if (_rotate)
+            {
+                yield return RotateCard(card);
+            }
+            var time = 0f;
+            while (time < 1f)
             {
                 card.transform.position = Vector3.Lerp(startPos, endPos, time);
                 time += Time.deltaTime;

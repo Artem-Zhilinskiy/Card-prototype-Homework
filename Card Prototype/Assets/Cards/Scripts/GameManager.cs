@@ -238,9 +238,9 @@ namespace Cards
             _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card1, _position2, true, true));
         }
 
-        public void RetrunCard (Card _card)
+        public void ReturnCard (Card _card, Vector3 _initialPosition)
         {
-            _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card, _position1, true, true));
+            _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card, _initialPosition, false, false));
         }
 
         //Первоначальная раздача 10 начальных карт

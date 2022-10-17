@@ -82,16 +82,15 @@ namespace Cards
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            Debug.Log(transform.position.z);
-            Debug.Log("hand position " + _handPosition.z);
             if(transform.position.z > -100)
             {
-                transform.position = new Vector3(-340, 0, -52);
-                //_playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card2, _position1));
+                //transform.position = new Vector3(-340, 0, -52);
+                _cp.GetComponent<GameManager>().ReturnCard(this, new Vector3(-340, 0, -52)); //Позднее заменить на поиск места в PlayerPlayed
             }
             else if( transform.position.z<= -100)
             {
-                transform.position = _handPosition;
+                //transform.position = _handPosition;
+                _cp.GetComponent<GameManager>().ReturnCard(this, _handPosition);
             }
         }
 
