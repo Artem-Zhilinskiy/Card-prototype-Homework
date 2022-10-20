@@ -1821,6 +1821,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d8a9f70b1c3691c43b6c500b35c1ee73, type: 2}
   _cardPrefab: {fileID: 860988157, guid: 1efffdaff08b40c44aa84086651f4a25, type: 3}
   _playerHand1: {fileID: 1740416223}
+  _playerPlayed1: {fileID: 1254303210}
   _player1DeckRoot: {fileID: 363479636}
   _playerHand2: {fileID: 2079049164}
   _player2DeckRoot: {fileID: 165638368}
@@ -2078,6 +2079,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1254303209}
+  - component: {fileID: 1254303210}
   m_Layer: 0
   m_Name: Player1Played
   m_TagString: Untagged
@@ -2106,6 +2108,26 @@ Transform:
   m_Father: {fileID: 1022456746}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1254303210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254303208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a27b8252c4077764caf3e78f70767dff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _positions:
+  - {fileID: 227656408}
+  - {fileID: 1074172361}
+  - {fileID: 348506874}
+  - {fileID: 1960557718}
+  - {fileID: 1536670354}
+  - {fileID: 1135306574}
+  - {fileID: 1876883250}
 --- !u!1 &1337363847
 GameObject:
   m_ObjectHideFlags: 0

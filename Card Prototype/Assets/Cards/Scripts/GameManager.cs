@@ -22,6 +22,8 @@ namespace Cards
 
         [SerializeField, Space]
         private PlayerHand _playerHand1;
+        [SerializeField, Space]
+        private PlayerPlayed _playerPlayed1;
         [SerializeField]
         private Transform _player1DeckRoot;
 
@@ -65,49 +67,13 @@ namespace Cards
             _baseMat.renderQueue = 2995;
             //Проверка типа героя и выставление соответствующей герою картинки
             HeroCheck();
-            //Создание колод
-            //DeckCreation();
-            //Раздача 10 карт в начале игры
-            //InitialCardSetUp();
         }
 
         private void Start()
         {
             DeckCreation();
             InitialCardSetUp();
-            /*
-            if (_fastStart == true)
-            {
-                _player1Deck = CreateDeck(_player1DeckRoot);
-            }
-            else
-            {
-                ShuffleDeck(_koloda);
-                _player1Deck = CreateChosenDeck(_player1DeckRoot);
-            }
-            _player2Deck = CreateDeck(_player2DeckRoot);
-            */
         }
-        /*
-        private void Update()
-        {
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                //Находит самую верхнюю на текущий момент карту в стопке
-                var index = _player1Deck.Length - 1;
-                for (int i = index; i >= 0; i--)
-                {
-                    if (_player1Deck[i] != null)
-                    {
-                        index = i;
-                        break;
-                    }
-                }
-                _playerHand1.SetNewCard(_player1Deck[index]);
-                _player1Deck[index] = null;
-            }
-        }
-        */
 
         private Card[] CreateDeck(Transform root)
         {
@@ -240,7 +206,8 @@ namespace Cards
 
         public void ReturnCard (Card _card, Vector3 _initialPosition)
         {
-            _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card, _initialPosition, false, false));
+            //_playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card, _initialPosition, false, false));
+            _playerPlayed1.MoveInPlayed(_card, _initialPosition);
         }
 
         //Первоначальная раздача 10 начальных карт

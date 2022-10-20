@@ -82,16 +82,7 @@ namespace Cards
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            if(transform.position.z > -100)
-            {
-                //transform.position = new Vector3(-340, 0, -52);
-                _cp.GetComponent<GameManager>().ReturnCard(this, new Vector3(-340, 0, -52)); //Позднее заменить на поиск места в PlayerPlayed
-            }
-            else if( transform.position.z<= -100)
-            {
-                //transform.position = _handPosition;
-                _cp.GetComponent<GameManager>().ReturnCard(this, _handPosition);
-            }
+            _cp.GetComponent<GameManager>().ReturnCard(this, _handPosition);
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -133,6 +124,7 @@ namespace Cards
                     transform.localScale *= c_scaleMult;
                     break;
                 case CardStateType.OnTable:
+                    transform.localScale *= c_scaleMult;
                     break;
                 case CardStateType.OnChoiceDeck:
                     transform.localScale *= c_scaleMult;
@@ -150,6 +142,7 @@ namespace Cards
                     transform.localScale /= c_scaleMult;
                     break;
                 case CardStateType.OnTable:
+                    transform.localScale /= c_scaleMult;
                     break;
                 case CardStateType.OnChoiceDeck:
                     transform.localScale /= c_scaleMult;
