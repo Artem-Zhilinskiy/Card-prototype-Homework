@@ -31,6 +31,8 @@ namespace Cards
         private PlayerHand _playerHand2;
         [SerializeField]
         private Transform _player2DeckRoot;
+        [SerializeField, Space]
+        private PlayerPlayed _playerPlayed2;
 
         [SerializeField, Space, Range(0f, 200f)]
         private int _cardDeckCount = 30;
@@ -72,10 +74,11 @@ namespace Cards
         private void Start()
         {
             DeckCreation();
-            InitialCardSetUp();
+            InitialCardSetUp(_player1Deck, _playerHand1);
+            InitialCardSetUp(_player2Deck, _playerHand2);
         }
 
-        private Card[] CreateDeck(Transform root)
+        private Card[] CreateDeck(Transform root, uint _player)
         {
             //Здесь случайный набор, надо переделать в соответствии с ТЗ
             var deck = new Card[_cardDeckCount]; //Содаётся массив вместимостью 30
@@ -94,6 +97,8 @@ namespace Cards
                     mainTexture = random.Texture
                 };
                 deck[i].Configuration(random, newMat, CardUtility.GetDescriptionById(random.Id));
+                //Опредение, какому игроку принадлежит карта
+                deck[i]._player = _player;
             }
             return deck;
         }
@@ -204,12 +209,39 @@ namespace Cards
             _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card1, _position2, true, true));
         }
 
-        public void ReturnCard (Card _card, Vector3 _initialPosition)
+        public void ReturnCard (Card _card, Vector3 _initialPosition, uint _player)
         {
             //_playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card, _initialPosition, false, false));
-            _playerPlayed1.MoveInPlayed(_card, _initialPosition);
+            if (_player == 1)
+            {
+                _playerPlayed1.MoveInPlayed(_card, _initialPosition);
+            }
+            else
+            {
+                _playerPlayed2.MoveInPlayed(_card, _initialPosition);
+            }
         }
 
+        //Первоначальная раздача 10 начальных карт
+        private void InitialCardSetUp(Card [] _deck, PlayerHand _playerHand)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                var index = _deck.Length - 1;
+                for (int i = index; i >= 0; i--)
+                {
+                    if (_deck[i] != null)
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+                _playerHand.SetNewCard(_deck[index]);
+                _deck[index] = null;
+            }
+        }
+
+        /*
         //Первоначальная раздача 10 начальных карт
         private void InitialCardSetUp()
         {
@@ -228,19 +260,20 @@ namespace Cards
                 _player1Deck[index] = null;
             }
         }
+        */
 
         private void DeckCreation()
         {
             if (_fastStart == true)
             {
-                _player1Deck = CreateDeck(_player1DeckRoot);
+                _player1Deck = CreateDeck(_player1DeckRoot, 1);
             }
             else
             {
                 ShuffleDeck(_koloda);
                 _player1Deck = CreateChosenDeck(_player1DeckRoot);
             }
-            _player2Deck = CreateDeck(_player2DeckRoot);
+            _player2Deck = CreateDeck(_player2DeckRoot, 2);
         }
     }
 }

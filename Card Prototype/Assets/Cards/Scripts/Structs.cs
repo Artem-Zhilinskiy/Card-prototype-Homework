@@ -29,6 +29,8 @@ namespace Cards
 	public struct CardPropertiesData
 	{
 		[Width(30)]
+		public uint _player;
+		[Width(30)]
 		public uint Id;
 		[NonSerialized]
 		public ushort Cost;

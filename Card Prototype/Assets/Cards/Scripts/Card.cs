@@ -28,6 +28,7 @@ namespace Cards
         private TextMeshPro _type;
 
         private uint _ID; // Для сохранения id карты и передачи её из сцены выбора в сцену игры
+        public uint _player; // Для определения игрока и управлением картой
 
         //Переменная для поиска GameManager
         private GameObject _cp;
@@ -56,6 +57,8 @@ namespace Cards
             _type.text = CardUnitType.None == data.Type ? "" : data.Type.ToString();
             //Сохранение id карты для формирования игровой колоды в сцене выбора
             _ID = data.Id;
+            //Определение героя для игрового прцесса
+            _player = data._player;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -82,7 +85,7 @@ namespace Cards
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            _cp.GetComponent<GameManager>().ReturnCard(this, _handPosition);
+            _cp.GetComponent<GameManager>().ReturnCard(this, _handPosition, _player);
         }
 
         public void OnPointerDown(PointerEventData eventData)
