@@ -7,7 +7,7 @@ namespace Cards
     public class PlayerPlayed : MonoBehaviour
     {
         [SerializeField]
-        private Transform[] _positions;
+        public Transform[] _positions;
         private Card[] _cardsInPlayed;
 
         private void Awake()

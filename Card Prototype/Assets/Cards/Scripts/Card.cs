@@ -33,6 +33,10 @@ namespace Cards
         //Переменная для поиска GameManager
         private GameObject _cp;
 
+        //Переменные для поиска PlayerPlayed
+        private GameObject _pp1;
+        private GameObject _pp2;
+
         //Флаг "была ли заменена" для выполнения требования 3 из ТЗ "Выбор стартовой руки: "Каждую карту можно заменить только раз"
         private bool _wasChanged = false;
         public CardStateType State {get; set;}
@@ -44,6 +48,8 @@ namespace Cards
         private void Awake()
         {
             _cp = GameObject.Find("CenterPoint");
+            _pp1 = GameObject.Find("Player1Played");
+            _pp2 = GameObject.Find("Player2Played");
         }
 
         public void Configuration (CardPropertiesData data, Material picture, string description)
@@ -79,13 +85,28 @@ namespace Cards
                     //transform.position = new Vector3(_position.x, 0, _position.y);
                     break;
                 case CardStateType.OnTable:
+                    _position = eventData.pointerCurrentRaycast.worldPosition;
+                    _position.y = 0;
+                    transform.position = _position;
                     break;
             }
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            _cp.GetComponent<GameManager>().ReturnCard(this, _handPosition, _player);
+            float _distance;
+            switch (State)
+            {
+                case CardStateType.InHand:
+                    _cp.GetComponent<GameManager>().ReturnCard(this, _handPosition, _player);
+                    break;
+                case CardStateType.OnTable:
+                    Debug.Log("Атака карты или возвращение");
+                    //Определение дистанции до одного из positions PlayerPlayed
+                    _distance = Vector3.Distance(transform.position, _pp1.GetComponent<PlayerPlayed>()._positions[1].transform.position);
+                    Debug.Log(_distance);
+                    break;
+            }
         }
 
         public void OnPointerDown(PointerEventData eventData)
