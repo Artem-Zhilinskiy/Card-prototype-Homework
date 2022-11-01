@@ -98,13 +98,20 @@ namespace Cards
             switch (State)
             {
                 case CardStateType.InHand:
-                    _cp.GetComponent<GameManager>().ReturnCard(this, _handPosition, _player);
+                    _cp.GetComponent<GameManager>().MoveInPlayedCard(this, _handPosition, _player);
                     break;
                 case CardStateType.OnTable:
-                    Debug.Log("Атака карты или возвращение");
                     //Определение дистанции до одного из positions PlayerPlayed
-                    _distance = Vector3.Distance(transform.position, _pp1.GetComponent<PlayerPlayed>()._positions[1].transform.position);
-                    Debug.Log(_distance);
+                    if (_player == 1)
+                    {
+                        _distance = Vector3.Distance(transform.position, _pp1.GetComponent<PlayerPlayed>()._positions[1].transform.position);
+                    }
+                    else
+                    {
+                        _distance = Vector3.Distance(transform.position, _pp2.GetComponent<PlayerPlayed>()._positions[1].transform.position);
+                    }
+                    _cp.GetComponent<GameManager>().ReturnPlayedCard(this);
+                    //Debug.Log(_distance);
                     break;
             }
         }

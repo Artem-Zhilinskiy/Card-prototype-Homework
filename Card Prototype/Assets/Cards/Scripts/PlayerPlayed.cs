@@ -8,7 +8,7 @@ namespace Cards
     {
         [SerializeField]
         public Transform[] _positions;
-        private Card[] _cardsInPlayed;
+        public Card[] _cardsInPlayed;
 
         private void Awake()
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cards.ScriptableObjects;
+using System;
 
 namespace Cards
 {
@@ -60,8 +61,15 @@ namespace Cards
         //Флаг быстрого старта
         public static bool _fastStart = false;
 
+        //Переменные для поиска PlayerPlayed
+        private GameObject _pp1;
+        private GameObject _pp2;
+
         private void Awake()
         {
+            _pp1 = GameObject.Find("Player1Played");
+            _pp2 = GameObject.Find("Player2Played");
+
             IEnumerable<CardPropertiesData> arrayCards = new List<CardPropertiesData>(); //Создаётся массив со структурой карты
             foreach (var pack in _packs) arrayCards = pack.UnionProperties(arrayCards); //Массивам присваевается стоимость
             _allCards = new List<CardPropertiesData>(arrayCards); // Почему-то массив переприсваивается?
@@ -90,7 +98,7 @@ namespace Cards
                 //if (deck[i].IsFrontSide) deck[i].SwitchEnable(); 
                 vector += new Vector3(0f,c_stepCardInDeck,0f); //Подъём места следующей карты
 
-                var random = _allCards[Random.Range(0, _allCards.Count)]; //Берётся случайная карта из заранее созданного массива всех карт
+                var random = _allCards[UnityEngine.Random.Range(0, _allCards.Count)]; //Берётся случайная карта из заранее созданного массива всех карт
 
                 var newMat = new Material(_baseMat)
                 {
@@ -161,7 +169,7 @@ namespace Cards
             List<int> _randomArray = new List<int>(_cardDeckCount);
             for (int i = 0; i < _cardDeckCount;)
             {
-                _randomNumber = Random.Range(0, _cardDeckCount);
+                _randomNumber = UnityEngine.Random.Range(0, _cardDeckCount);
                 if (!_randomArray.Contains(_randomNumber))
                 {
                     _randomArray.Add(_randomNumber);
@@ -186,7 +194,7 @@ namespace Cards
             Card _resultRandomCard = null;
             while (_resultRandomCard == null)
             {
-                Card _randomCard = _player1Deck[Random.Range(0, _player1Deck.Length)];
+                Card _randomCard = _player1Deck[UnityEngine.Random.Range(0, _player1Deck.Length)];
                 if ((_randomCard != null) && (_randomCard.State == CardStateType.InDeck))
                 {
                     _resultRandomCard = _randomCard;
@@ -209,7 +217,7 @@ namespace Cards
             _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card1, _position2, true, true));
         }
 
-        public void ReturnCard (Card _card, Vector3 _initialPosition, uint _player)
+        public void MoveInPlayedCard (Card _card, Vector3 _initialPosition, uint _player)
         {
             //_playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card, _initialPosition, false, false));
             if (_player == 1)
@@ -219,6 +227,32 @@ namespace Cards
             else
             {
                 _playerPlayed2.MoveInPlayed(_card, _initialPosition);
+            }
+        }
+
+        public void ReturnPlayedCard(Card _card)
+        {
+            if (_card._player == 1)
+            {
+                foreach (var card in _pp1.GetComponent<PlayerPlayed>()._cardsInPlayed)
+                {
+                    if (_card == card)
+                    {
+                        int _index = Array.IndexOf(_pp1.GetComponent<PlayerPlayed>()._cardsInPlayed, card);
+                        _playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card, _pp1.GetComponent<PlayerPlayed>()._positions[_index], false, false));
+                    }
+                }
+            }
+            else
+            {
+                foreach (var card in _pp2.GetComponent<PlayerPlayed>()._cardsInPlayed)
+                {
+                    if (_card == card)
+                    {
+                        int _index = Array.IndexOf(_pp2.GetComponent<PlayerPlayed>()._cardsInPlayed, card);
+                        _playerHand2.StartCoroutine(_playerHand2.MoveInHand(_card, _pp2.GetComponent<PlayerPlayed>()._positions[_index], false, false));
+                    }
+                }
             }
         }
 
