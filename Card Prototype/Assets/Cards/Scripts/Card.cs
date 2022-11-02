@@ -29,6 +29,8 @@ namespace Cards
 
         private uint _ID; // Для сохранения id карты и передачи её из сцены выбора в сцену игры
         public uint _player; // Для определения игрока и управлением картой
+        private ushort _dynamicHealth; //Для отслеживания здоровья карты
+        private ushort _ushortAttack; //Для отслеживания здоровья карты
 
         //Переменная для поиска GameManager
         private GameObject _cp;
@@ -36,6 +38,9 @@ namespace Cards
         //Переменные для поиска PlayerPlayed
         private GameObject _pp1;
         private GameObject _pp2;
+
+        //Атакованная карта
+        private Card _attackedCard;
 
         //Флаг "была ли заменена" для выполнения требования 3 из ТЗ "Выбор стартовой руки: "Каждую карту можно заменить только раз"
         private bool _wasChanged = false;
@@ -60,11 +65,13 @@ namespace Cards
             _description.text = description;
             _attack.text = data.Attack.ToString();
             _health.text = data.Health.ToString();
+            _dynamicHealth = data.Health;
             _type.text = CardUnitType.None == data.Type ? "" : data.Type.ToString();
             //Сохранение id карты для формирования игровой колоды в сцене выбора
             _ID = data.Id;
             //Определение героя для игрового прцесса
             _player = data._player;
+            _ushortAttack = data.Attack;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -94,7 +101,7 @@ namespace Cards
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            float _distance;
+            float _distance = 999f;
             switch (State)
             {
                 case CardStateType.InHand:
@@ -104,14 +111,39 @@ namespace Cards
                     //Определение дистанции до одного из positions PlayerPlayed
                     if (_player == 1)
                     {
-                        _distance = Vector3.Distance(transform.position, _pp1.GetComponent<PlayerPlayed>()._positions[1].transform.position);
+                        foreach (var card in _pp2.GetComponent<PlayerPlayed>()._cardsInPlayed)
+                        {
+                            if (card != null)
+                            {
+                                var _tempDistance = Vector3.Distance(transform.position, card.transform.position);
+                                if (_tempDistance < _distance)
+                                {
+                                    _distance = _tempDistance;
+                                    _attackedCard = card;
+                                }
+                            }
+                        }
+                        _attackedCard._dynamicHealth -= _ushortAttack;
+                        _attackedCard._health.text = _attackedCard._dynamicHealth.ToString();
                     }
                     else
                     {
-                        _distance = Vector3.Distance(transform.position, _pp2.GetComponent<PlayerPlayed>()._positions[1].transform.position);
+                        foreach (var card in _pp1.GetComponent<PlayerPlayed>()._cardsInPlayed)
+                        {
+                            if (card != null)
+                            {
+                                var _tempDistance = Vector3.Distance(transform.position, card.transform.position);
+                                if (_tempDistance < _distance)
+                                {
+                                    _distance = _tempDistance;
+                                    _attackedCard = card;
+                                }
+                            }
+                        }
+                        _attackedCard._dynamicHealth -= _ushortAttack;
+                        _attackedCard._health.text = _attackedCard._dynamicHealth.ToString();
                     }
                     _cp.GetComponent<GameManager>().ReturnPlayedCard(this);
-                    //Debug.Log(_distance);
                     break;
             }
         }
