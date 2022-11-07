@@ -123,8 +123,6 @@ namespace Cards
                                 }
                             }
                         }
-                        _attackedCard._dynamicHealth -= _ushortAttack;
-                        _attackedCard._health.text = _attackedCard._dynamicHealth.ToString();
                     }
                     else
                     {
@@ -140,10 +138,23 @@ namespace Cards
                                 }
                             }
                         }
-                        _attackedCard._dynamicHealth -= _ushortAttack;
-                        _attackedCard._health.text = _attackedCard._dynamicHealth.ToString();
+
                     }
+                    if (_attackedCard._dynamicHealth > _ushortAttack)
+                    {
+                        _attackedCard._dynamicHealth -= _ushortAttack;
+                    }
+                    else
+                    {
+                        _attackedCard._dynamicHealth = 0;
+                    }
+                    _attackedCard._health.text = _attackedCard._dynamicHealth.ToString();
                     _cp.GetComponent<GameManager>().ReturnPlayedCard(this);
+                    if (_attackedCard._dynamicHealth == 0)
+                    {
+                        Debug.Log("Карта уничтожена");
+                        Destroy(_attackedCard.gameObject);
+                    }
                     break;
             }
         }
