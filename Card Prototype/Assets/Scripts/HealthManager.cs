@@ -29,7 +29,31 @@ namespace Cards
             _healthIndicatorSecondPlayer.text = _healthSecondPlayer.ToString();
         }
 
+        public void HeroDamage(ushort _attack, uint _player)
+        {
+            if (_player == 2)
+            {
+                _healthFirstPlayer -= _attack;
+            }
+            else
+            {
+                _healthSecondPlayer -= _attack;
+            }
+            UpdateHealthIndicators();
+            if (_healthFirstPlayer <= 0)
+            {
+                Debug.Log("Победа второго игрока");
+                UnityEditor.EditorApplication.isPaused = true;
+            }
+            if (_healthSecondPlayer <= 0)
+            {
+                Debug.Log("Победа первого игрока");
+                UnityEditor.EditorApplication.isPaused = true;
+            }
+        }
+
         #region Тест индикаторов здоровья игроков
+        /*
         //Тест индикаторов здоровья
         private void TestHealthIndicators()
         {
@@ -44,6 +68,7 @@ namespace Cards
         {
             TestHealthIndicators();
         }
+        */
         #endregion
     }
 }

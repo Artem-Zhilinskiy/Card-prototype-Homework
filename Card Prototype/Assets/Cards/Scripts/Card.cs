@@ -39,6 +39,10 @@ namespace Cards
         private GameObject _pp1;
         private GameObject _pp2;
 
+        //Переменные для поиска изображений героев
+        private GameObject _hero1;
+        private GameObject _hero2;
+
         //Атакованная карта
         private Card _attackedCard;
 
@@ -55,6 +59,8 @@ namespace Cards
             _cp = GameObject.Find("CenterPoint");
             _pp1 = GameObject.Find("Player1Played");
             _pp2 = GameObject.Find("Player2Played");
+            _hero1 = GameObject.Find("Player1Head");
+            _hero2 = GameObject.Find("Player2Head");
         }
 
         public void Configuration (CardPropertiesData data, Material picture, string description)
@@ -101,7 +107,7 @@ namespace Cards
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            float _distance = 999f;
+            //float _distance = 999f;
             switch (State)
             {
                 case CardStateType.InHand:
@@ -111,6 +117,7 @@ namespace Cards
                     //Определение дистанции до одного из positions PlayerPlayed
                     if (_player == 1)
                     {
+                        float _distance = Vector3.Distance(transform.position, _hero2.transform.position);
                         foreach (var card in _pp2.GetComponent<PlayerPlayed>()._cardsInPlayed)
                         {
                             if (card != null)
@@ -126,6 +133,7 @@ namespace Cards
                     }
                     else
                     {
+                        float _distance = Vector3.Distance(transform.position, _hero1.transform.position);
                         foreach (var card in _pp1.GetComponent<PlayerPlayed>()._cardsInPlayed)
                         {
                             if (card != null)
@@ -140,19 +148,22 @@ namespace Cards
                         }
 
                     }
-                    if (_attackedCard._dynamicHealth > _ushortAttack)
+                    if ((_attackedCard != null) && (_attackedCard._dynamicHealth > _ushortAttack))
                     {
                         _attackedCard._dynamicHealth -= _ushortAttack;
+                        _attackedCard._health.text = _attackedCard._dynamicHealth.ToString();
                     }
-                    else
+                    else if (_attackedCard != null)
                     {
                         _attackedCard._dynamicHealth = 0;
                     }
-                    _attackedCard._health.text = _attackedCard._dynamicHealth.ToString();
-                    _cp.GetComponent<GameManager>().ReturnPlayedCard(this);
-                    if (_attackedCard._dynamicHealth == 0)
+                    else if (_attackedCard == null)
                     {
-                        Debug.Log("Карта уничтожена");
+                        _cp.GetComponent<HealthManager>().HeroDamage(_ushortAttack, _player);
+                    }
+                    _cp.GetComponent<GameManager>().ReturnPlayedCard(this);
+                    if ((_attackedCard != null) && (_attackedCard._dynamicHealth == 0))
+                    {
                         Destroy(_attackedCard.gameObject);
                     }
                     break;
