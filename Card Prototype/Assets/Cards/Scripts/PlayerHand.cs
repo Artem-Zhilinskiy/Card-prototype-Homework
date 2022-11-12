@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 namespace Cards
@@ -38,6 +39,19 @@ namespace Cards
                 if (_cardsInHand[i] == null) return i;
             }
             return -1;
+        }
+
+        //Обнуление места в массиве, когда карта покидает руку
+        public void CardIsPlayed(Card _card)
+        {
+            foreach (var _cardInHand in _cardsInHand)
+            {
+                if (_card == _cardInHand)
+                {
+                    var _index = Array.IndexOf(_cardsInHand, _cardInHand);
+                    _cardsInHand[_index] = null;
+                }
+            }
         }
 
         public IEnumerator MoveInHand(Card card, Transform parent, bool _up, bool _rotate)

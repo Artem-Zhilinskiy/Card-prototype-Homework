@@ -31,6 +31,7 @@ namespace Cards
         public uint _player; // Для определения игрока и управлением картой
         private ushort _dynamicHealth; //Для отслеживания здоровья карты
         private ushort _ushortAttack; //Для отслеживания здоровья карты
+        public int _costMana; // Для отслеживания маны у игроков
 
         //Переменная для поиска GameManager
         private GameObject _cp;
@@ -43,6 +44,7 @@ namespace Cards
         private GameObject _hero1;
         private GameObject _hero2;
 
+
         //Атакованная карта
         private Card _attackedCard;
 
@@ -54,6 +56,9 @@ namespace Cards
 
         Vector3 _handPosition;
 
+        //Для отключения карт во время хода другого игрка
+        public bool _isPlayerTurn = false;
+
         private void Awake()
         {
             _cp = GameObject.Find("CenterPoint");
@@ -61,6 +66,7 @@ namespace Cards
             _pp2 = GameObject.Find("Player2Played");
             _hero1 = GameObject.Find("Player1Head");
             _hero2 = GameObject.Find("Player2Head");
+            //var _turnManager = GameObject.Find("TurnCanvas").GetComponent<TurnManager>();
         }
 
         public void Configuration (CardPropertiesData data, Material picture, string description)
@@ -78,95 +84,127 @@ namespace Cards
             //Определение героя для игрового прцесса
             _player = data._player;
             _ushortAttack = data.Attack;
+            _costMana = data.Cost;
+        }
+
+        private bool CheckTurnAndMana()
+        {
+            if (GameObject.Find("TurnCanvas").GetComponent<TurnManager>()._playerTurn == _player) //Если сейчас ход того игрока, чья карта
+            {
+                switch (GameObject.Find("TurnCanvas").GetComponent<TurnManager>()._playerTurn) //У этого игрока
+                {
+                    case 1:
+                        if (_cp.GetComponent<GameManager>()._manaFirstPlayer >= _costMana)
+                        {
+                            return true;
+                        }
+                        else return false;
+                    case 2:
+                        if (_cp.GetComponent<GameManager>()._manaSecondPlayer >= _costMana)
+                        {
+                            return true;
+                        }
+                        else return false;
+                    default:
+                        return false;
+                }
+            }
+            else return false;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            _handPosition = transform.position;
+            if (GameObject.Find("TurnCanvas").GetComponent<TurnManager>()._playerTurn == _player)
+            {
+                _handPosition = transform.position;
+            }
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            switch (State)
+            if (CheckTurnAndMana())
             {
-                case CardStateType.InHand:
-                    //Debug.Log("Dragging.");
-                    //transform.position = eventData.pointerCurrentRaycast.worldPosition;
-                    Vector3 _position = eventData.pointerCurrentRaycast.worldPosition;
-                    _position.y = 0;
-                    transform.position = _position;
-                    //transform.position = new Vector3(_position.x, 0, _position.y);
-                    break;
-                case CardStateType.OnTable:
-                    _position = eventData.pointerCurrentRaycast.worldPosition;
-                    _position.y = 0;
-                    transform.position = _position;
-                    break;
+                switch (State)
+                {
+                    case CardStateType.InHand:
+                        Vector3 _position = eventData.pointerCurrentRaycast.worldPosition;
+                        _position.y = 0;
+                        transform.position = _position;
+                        //transform.position = new Vector3(_position.x, 0, _position.y);
+                        break;
+                    case CardStateType.OnTable:
+                        _position = eventData.pointerCurrentRaycast.worldPosition;
+                        _position.y = 0;
+                        transform.position = _position;
+                        break;
+                }
             }
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            //float _distance = 999f;
-            switch (State)
+            if (GameObject.Find("TurnCanvas").GetComponent<TurnManager>()._playerTurn == _player)
             {
-                case CardStateType.InHand:
-                    _cp.GetComponent<GameManager>().MoveInPlayedCard(this, _handPosition, _player);
-                    break;
-                case CardStateType.OnTable:
-                    //Определение дистанции до одного из positions PlayerPlayed
-                    if (_player == 1)
-                    {
-                        float _distance = Vector3.Distance(transform.position, _hero2.transform.position);
-                        foreach (var card in _pp2.GetComponent<PlayerPlayed>()._cardsInPlayed)
+                switch (State)
+                {
+                    case CardStateType.InHand:
+                        _cp.GetComponent<GameManager>().MoveInPlayedCard(this, _handPosition, _player);
+                        break;
+                    case CardStateType.OnTable:
+                        //Определение дистанции до одного из positions PlayerPlayed
+                        if (_player == 1)
                         {
-                            if (card != null)
+                            float _distance = Vector3.Distance(transform.position, _hero2.transform.position);
+                            foreach (var card in _pp2.GetComponent<PlayerPlayed>()._cardsInPlayed)
                             {
-                                var _tempDistance = Vector3.Distance(transform.position, card.transform.position);
-                                if (_tempDistance < _distance)
+                                if (card != null)
                                 {
-                                    _distance = _tempDistance;
-                                    _attackedCard = card;
+                                    var _tempDistance = Vector3.Distance(transform.position, card.transform.position);
+                                    if (_tempDistance < _distance)
+                                    {
+                                        _distance = _tempDistance;
+                                        _attackedCard = card;
+                                    }
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        float _distance = Vector3.Distance(transform.position, _hero1.transform.position);
-                        foreach (var card in _pp1.GetComponent<PlayerPlayed>()._cardsInPlayed)
+                        else
                         {
-                            if (card != null)
+                            float _distance = Vector3.Distance(transform.position, _hero1.transform.position);
+                            foreach (var card in _pp1.GetComponent<PlayerPlayed>()._cardsInPlayed)
                             {
-                                var _tempDistance = Vector3.Distance(transform.position, card.transform.position);
-                                if (_tempDistance < _distance)
+                                if (card != null)
                                 {
-                                    _distance = _tempDistance;
-                                    _attackedCard = card;
+                                    var _tempDistance = Vector3.Distance(transform.position, card.transform.position);
+                                    if (_tempDistance < _distance)
+                                    {
+                                        _distance = _tempDistance;
+                                        _attackedCard = card;
+                                    }
                                 }
                             }
-                        }
 
-                    }
-                    if ((_attackedCard != null) && (_attackedCard._dynamicHealth > _ushortAttack))
-                    {
-                        _attackedCard._dynamicHealth -= _ushortAttack;
-                        _attackedCard._health.text = _attackedCard._dynamicHealth.ToString();
-                    }
-                    else if (_attackedCard != null)
-                    {
-                        _attackedCard._dynamicHealth = 0;
-                    }
-                    else if (_attackedCard == null)
-                    {
-                        _cp.GetComponent<HealthManager>().HeroDamage(_ushortAttack, _player);
-                    }
-                    _cp.GetComponent<GameManager>().ReturnPlayedCard(this);
-                    if ((_attackedCard != null) && (_attackedCard._dynamicHealth == 0))
-                    {
-                        Destroy(_attackedCard.gameObject);
-                    }
-                    break;
+                        }
+                        if ((_attackedCard != null) && (_attackedCard._dynamicHealth > _ushortAttack))
+                        {
+                            _attackedCard._dynamicHealth -= _ushortAttack;
+                            _attackedCard._health.text = _attackedCard._dynamicHealth.ToString();
+                        }
+                        else if (_attackedCard != null)
+                        {
+                            _attackedCard._dynamicHealth = 0;
+                        }
+                        else if (_attackedCard == null)
+                        {
+                            _cp.GetComponent<HealthManager>().HeroDamage(_ushortAttack, _player);
+                        }
+                        _cp.GetComponent<GameManager>().ReturnPlayedCard(this);
+                        if ((_attackedCard != null) && (_attackedCard._dynamicHealth == 0))
+                        {
+                            Destroy(_attackedCard.gameObject);
+                        }
+                        break;
+                }
             }
         }
 

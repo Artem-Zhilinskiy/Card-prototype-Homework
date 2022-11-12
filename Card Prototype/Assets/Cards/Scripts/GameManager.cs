@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cards.ScriptableObjects;
 using System;
+using TMPro;
 
 namespace Cards
 {
@@ -13,8 +14,8 @@ namespace Cards
         private Material _baseMat;
         private List<CardPropertiesData> _allCards;
 
-        private Card[] _player1Deck;
-        private Card[] _player2Deck;
+        public Card[] _player1Deck;
+        public Card[] _player2Deck;
 
         [SerializeField]
         private CardPackConfiguration[] _packs;
@@ -37,6 +38,9 @@ namespace Cards
 
         [SerializeField, Space, Range(0f, 200f)]
         private int _cardDeckCount = 30;
+
+        [SerializeField, Space]
+        private HealthManager _healthManager;
 
         //Картинка игрока
         [SerializeField]
@@ -65,6 +69,21 @@ namespace Cards
         private GameObject _pp1;
         private GameObject _pp2;
 
+        //Отслежение маны игроков
+        [Header("Мана первого игрока")]
+        public int _manaFirstPlayer = 1;
+        [Header("Мана второго игрока")]
+        public int _manaSecondPlayer = 1;
+
+        [SerializeField]
+        private TextMeshProUGUI _manaIndicatorFirstPlayer;
+        [SerializeField]
+        private TextMeshProUGUI _manaIndicatorSecondPlayer;
+
+        //Счётчик взятых карт из пустой колоды для каждого игрока
+        private ushort _emptyTaken1 = 0;
+        private ushort _emptyTaken2 = 0;
+
         private void Awake()
         {
             _pp1 = GameObject.Find("Player1Played");
@@ -72,7 +91,7 @@ namespace Cards
 
             IEnumerable<CardPropertiesData> arrayCards = new List<CardPropertiesData>(); //Создаётся массив со структурой карты
             foreach (var pack in _packs) arrayCards = pack.UnionProperties(arrayCards); //Массивам присваевается стоимость
-            _allCards = new List<CardPropertiesData>(arrayCards); // Почему-то массив переприсваивается?
+            _allCards = new List<CardPropertiesData>(arrayCards); 
             _baseMat = new Material(Shader.Find("TextMeshPro/Sprite"));
             _baseMat.renderQueue = 2995;
             //Проверка типа героя и выставление соответствующей герою картинки
@@ -219,15 +238,19 @@ namespace Cards
 
         public void MoveInPlayedCard (Card _card, Vector3 _initialPosition, uint _player)
         {
-            //_playerHand1.StartCoroutine(_playerHand1.MoveInHand(_card, _initialPosition, false, false));
-            if (_player == 1)
+            if ((_player == 1) && (_manaFirstPlayer >= _card._costMana))
             {
+                _playerHand1.CardIsPlayed(_card); //Обнуление позиции сыгранной карты в PlayerHand
+                _manaFirstPlayer -= _card._costMana;
                 _playerPlayed1.MoveInPlayed(_card, _initialPosition);
             }
-            else
+            else if (_manaSecondPlayer >= _card._costMana)
             {
+                _playerHand2.CardIsPlayed(_card);
+                _manaSecondPlayer -= _card._costMana;
                 _playerPlayed2.MoveInPlayed(_card, _initialPosition);
             }
+            UpdateMana();
         }
 
         public void ReturnPlayedCard(Card _card)
@@ -259,7 +282,7 @@ namespace Cards
         //Первоначальная раздача 10 начальных карт
         private void InitialCardSetUp(Card [] _deck, PlayerHand _playerHand)
         {
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < 9; j++)
             {
                 var index = _deck.Length - 1;
                 for (int i = index; i >= 0; i--)
@@ -275,26 +298,37 @@ namespace Cards
             }
         }
 
-        /*
-        //Первоначальная раздача 10 начальных карт
-        private void InitialCardSetUp()
+        public void TurnNewCard(Card[] _deck, PlayerHand _playerHand, ushort _playerTurn)
         {
-            for (int j = 0; j < 10; j++)
-            {
-                var index = _player1Deck.Length - 1;
-                for (int i = index; i >= 0; i--)
+            var index = _deck.Length - 1;
+            for (int i = index; i >= 0; i--)
                 {
-                    if (_player1Deck[i] != null)
-                    {
-                        index = i;
-                        break;
-                    }
+                if ((_deck[i] != null) && (_deck[i].State == CardStateType.InDeck))
+                {
+                    index = i;
+                    break;
                 }
-                _playerHand1.SetNewCard(_player1Deck[index]);
-                _player1Deck[index] = null;
+            }
+            if (_deck[index] != null)
+            {
+                _playerHand.SetNewCard(_deck[index]);
+                _deck[index] = null;
+            }
+            else
+            {
+                switch (_playerTurn)
+                {
+                    case 1:
+                        _emptyTaken1 += 1;
+                        _healthManager.HeroDamage(_emptyTaken1, _playerTurn);
+                        break;                    
+                    case 2:
+                        _emptyTaken2 += 1;
+                        _healthManager.HeroDamage(_emptyTaken2, _playerTurn);
+                        break;
+                }
             }
         }
-        */
 
         private void DeckCreation()
         {
@@ -308,6 +342,27 @@ namespace Cards
                 _player1Deck = CreateChosenDeck(_player1DeckRoot);
             }
             _player2Deck = CreateDeck(_player2DeckRoot, 2);
+        }
+
+        //Метод для обновления показателей маны
+        private void UpdateMana()
+        {
+            _manaIndicatorFirstPlayer.text = _manaFirstPlayer.ToString();
+            _manaIndicatorSecondPlayer.text = _manaSecondPlayer.ToString();
+        }
+
+        //Метод для обновления маны
+        public void ManaRenovation(uint _player)
+        {
+            if ((_player == 1) && (_manaFirstPlayer < 10))
+            {
+                _manaFirstPlayer += 1;
+            }            
+            if ((_player == 2) && (_manaSecondPlayer < 10))
+            {
+                _manaSecondPlayer += 1;
+            }
+            UpdateMana();
         }
     }
 }
