@@ -122,23 +122,24 @@ namespace Cards
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (CheckTurnAndMana())
-            {
+            Vector3 _position;
                 switch (State)
                 {
                     case CardStateType.InHand:
-                        Vector3 _position = eventData.pointerCurrentRaycast.worldPosition;
-                        _position.y = 0;
-                        transform.position = _position;
-                        //transform.position = new Vector3(_position.x, 0, _position.y);
-                        break;
-                    case CardStateType.OnTable:
+                    if (CheckTurnAndMana())
+                    {
                         _position = eventData.pointerCurrentRaycast.worldPosition;
                         _position.y = 0;
                         transform.position = _position;
-                        break;
+                        //transform.position = new Vector3(_position.x, 0, _position.y);
+                    }
+                    break;
+                    case CardStateType.OnTable:
+                    _position = eventData.pointerCurrentRaycast.worldPosition;
+                    _position.y = 0;
+                    transform.position = _position;
+                    break;
                 }
-            }
         }
 
         public void OnEndDrag(PointerEventData eventData)

@@ -244,7 +244,7 @@ namespace Cards
                 _manaFirstPlayer -= _card._costMana;
                 _playerPlayed1.MoveInPlayed(_card, _initialPosition);
             }
-            else if (_manaSecondPlayer >= _card._costMana)
+            else if ((_player == 2) && (_manaSecondPlayer >= _card._costMana))
             {
                 _playerHand2.CardIsPlayed(_card);
                 _manaSecondPlayer -= _card._costMana;
