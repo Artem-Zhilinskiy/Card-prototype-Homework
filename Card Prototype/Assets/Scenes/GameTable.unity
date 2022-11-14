@@ -2230,6 +2230,7 @@ GameObject:
   - component: {fileID: 1022456746}
   - component: {fileID: 1022456747}
   - component: {fileID: 1022456748}
+  - component: {fileID: 1022456749}
   m_Layer: 0
   m_Name: CenterPoint
   m_TagString: Untagged
@@ -2314,6 +2315,7 @@ MonoBehaviour:
   _playerPlayed2: {fileID: 1801258390}
   _cardDeckCount: 30
   _healthManager: {fileID: 1022456748}
+  _effectManager: {fileID: 1022456749}
   _heroPicture: {fileID: 1906621228}
   _mageMat: {fileID: 2100000, guid: 96f1efd130eb66d4a839e8736c354f97, type: 2}
   _warriorMat: {fileID: 2100000, guid: d029fbf9a9af4ed4a85df9bbfc48329d, type: 2}
@@ -2339,6 +2341,18 @@ MonoBehaviour:
   _healthIndicatorSecondPlayer: {fileID: 854852912}
   _healthFirstPlayer: 10
   _healthSecondPlayer: 10
+--- !u!114 &1022456749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022456745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ab31312fd36624fa0ed7ebd060dae5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1074172360
 GameObject:
   m_ObjectHideFlags: 0

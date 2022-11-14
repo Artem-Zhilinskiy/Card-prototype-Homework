@@ -27,7 +27,7 @@ namespace Cards
         [SerializeField]
         private TextMeshPro _type;
 
-        private uint _ID; // Для сохранения id карты и передачи её из сцены выбора в сцену игры
+        public uint _ID; // Для сохранения id карты и передачи её из сцены выбора в сцену игры
         public uint _player; // Для определения игрока и управлением картой
         private ushort _dynamicHealth; //Для отслеживания здоровья карты
         private ushort _ushortAttack; //Для отслеживания здоровья карты
@@ -232,7 +232,7 @@ namespace Cards
                     else
                     {
                         GameManager._koloda.Add(_ID);
-                        Debug.Log(GameManager._koloda.Count);
+                        Debug.Log(GameManager._koloda.Count + " ID: " + _ID);
                     }
                     break;
             }

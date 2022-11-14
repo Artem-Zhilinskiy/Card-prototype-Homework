@@ -42,6 +42,9 @@ namespace Cards
         [SerializeField, Space]
         private HealthManager _healthManager;
 
+        [SerializeField, Space]
+        private EffectManager _effectManager;
+
         //Картинка игрока
         [SerializeField]
         private Transform _heroPicture;
@@ -243,12 +246,16 @@ namespace Cards
                 _playerHand1.CardIsPlayed(_card); //Обнуление позиции сыгранной карты в PlayerHand
                 _manaFirstPlayer -= _card._costMana;
                 _playerPlayed1.MoveInPlayed(_card, _initialPosition);
+                //Вызов эффекта сыгранной карты
+                _effectManager.PlayEffect(_card);
             }
             else if ((_player == 2) && (_manaSecondPlayer >= _card._costMana))
             {
                 _playerHand2.CardIsPlayed(_card);
                 _manaSecondPlayer -= _card._costMana;
                 _playerPlayed2.MoveInPlayed(_card, _initialPosition);
+                //Вызов эффекта сыгранной карты
+                _effectManager.PlayEffect(_card);
             }
             UpdateMana();
         }
