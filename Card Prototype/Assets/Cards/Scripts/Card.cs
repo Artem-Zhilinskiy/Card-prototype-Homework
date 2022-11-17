@@ -135,9 +135,13 @@ namespace Cards
                     }
                     break;
                     case CardStateType.OnTable:
-                    _position = eventData.pointerCurrentRaycast.worldPosition;
-                    _position.y = 0;
-                    transform.position = _position;
+                    if (GameObject.Find("TurnCanvas").GetComponent<TurnManager>()._playerTurn == _player)
+                    {
+                        _handPosition = transform.position;
+                        _position = eventData.pointerCurrentRaycast.worldPosition;
+                        _position.y = 0;
+                        transform.position = _position;
+                    }
                     break;
                 }
         }
@@ -160,11 +164,20 @@ namespace Cards
                             {
                                 if (card != null)
                                 {
-                                    var _tempDistance = Vector3.Distance(transform.position, card.transform.position);
-                                    if (_tempDistance < _distance)
+                                    //Проверка, действует ли у противника провокация
+                                    if (Taunted(card))
                                     {
-                                        _distance = _tempDistance;
                                         _attackedCard = card;
+                                        break; ;
+                                    }
+                                    else
+                                    {
+                                        var _tempDistance = Vector3.Distance(transform.position, card.transform.position);
+                                        if (_tempDistance < _distance)
+                                        {
+                                            _distance = _tempDistance;
+                                            _attackedCard = card;
+                                        }
                                     }
                                 }
                             }
@@ -176,11 +189,20 @@ namespace Cards
                             {
                                 if (card != null)
                                 {
-                                    var _tempDistance = Vector3.Distance(transform.position, card.transform.position);
-                                    if (_tempDistance < _distance)
+                                    //Проверка, действует ли у противника провокация
+                                    if (Taunted(card))
                                     {
-                                        _distance = _tempDistance;
                                         _attackedCard = card;
+                                        break; ;
+                                    }
+                                    else
+                                    {
+                                        var _tempDistance = Vector3.Distance(transform.position, card.transform.position);
+                                        if (_tempDistance < _distance)
+                                        {
+                                            _distance = _tempDistance;
+                                            _attackedCard = card;
+                                        }
                                     }
                                 }
                             }
@@ -313,6 +335,13 @@ namespace Cards
                 case CardStateType.OnChoiceDeck:
                     break;
             }
+        }
+
+        private bool Taunted (Card card)
+        {
+            if ((card._ID == 103) || (card._ID == 204) || (card._ID == 303) || (card._ID == 308) || (card._ID == 406) || (card._ID == 501) || (card._ID == 603))
+                return true;
+            else return false;
         }
     }
 }
