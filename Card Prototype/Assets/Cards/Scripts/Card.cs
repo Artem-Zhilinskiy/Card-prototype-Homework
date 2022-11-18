@@ -50,6 +50,9 @@ namespace Cards
 
         //Флаг "была ли заменена" для выполнения требования 3 из ТЗ "Выбор стартовой руки: "Каждую карту можно заменить только раз"
         private bool _wasChanged = false;
+
+        //Флаг, прошёл ли ход с момента выкладывания карты на стол
+        public bool _playable = false;
         public CardStateType State {get; set;}
 
         public bool IsFrontSide => _frontCard.activeSelf;
@@ -66,7 +69,6 @@ namespace Cards
             _pp2 = GameObject.Find("Player2Played");
             _hero1 = GameObject.Find("Player1Head");
             _hero2 = GameObject.Find("Player2Head");
-            //var _turnManager = GameObject.Find("TurnCanvas").GetComponent<TurnManager>();
         }
 
         public void Configuration (CardPropertiesData data, Material picture, string description)
@@ -85,6 +87,7 @@ namespace Cards
             _player = data._player;
             _ushortAttack = data.Attack;
             _costMana = data.Cost;
+            _playable = Charge(); //Можно ли разыгрывать эту карту сразу после выкладывания на стол.
         }
 
         private bool CheckTurnAndMana()
@@ -114,7 +117,7 @@ namespace Cards
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (GameObject.Find("TurnCanvas").GetComponent<TurnManager>()._playerTurn == _player)
+            if ((GameObject.Find("TurnCanvas").GetComponent<TurnManager>()._playerTurn == _player) && (_playable))
             {
                 _handPosition = transform.position;
             }
@@ -135,7 +138,7 @@ namespace Cards
                     }
                     break;
                     case CardStateType.OnTable:
-                    if (GameObject.Find("TurnCanvas").GetComponent<TurnManager>()._playerTurn == _player)
+                    if ((GameObject.Find("TurnCanvas").GetComponent<TurnManager>()._playerTurn == _player) && (_playable))
                     {
                         _handPosition = transform.position;
                         _position = eventData.pointerCurrentRaycast.worldPosition;
@@ -157,7 +160,7 @@ namespace Cards
                         break;
                     case CardStateType.OnTable:
                         //Определение дистанции до одного из positions PlayerPlayed
-                        if (_player == 1)
+                        if ((_player == 1) && (_playable))
                         {
                             float _distance = Vector3.Distance(transform.position, _hero2.transform.position);
                             foreach (var card in _pp2.GetComponent<PlayerPlayed>()._cardsInPlayed)
@@ -168,7 +171,7 @@ namespace Cards
                                     if (Taunted(card))
                                     {
                                         _attackedCard = card;
-                                        break; ;
+                                        break;
                                     }
                                     else
                                     {
@@ -182,7 +185,7 @@ namespace Cards
                                 }
                             }
                         }
-                        else
+                        else if (_playable) //Модуль игрока 2
                         {
                             float _distance = Vector3.Distance(transform.position, _hero1.transform.position);
                             foreach (var card in _pp1.GetComponent<PlayerPlayed>()._cardsInPlayed)
@@ -193,7 +196,7 @@ namespace Cards
                                     if (Taunted(card))
                                     {
                                         _attackedCard = card;
-                                        break; ;
+                                        break;
                                     }
                                     else
                                     {
@@ -206,7 +209,6 @@ namespace Cards
                                     }
                                 }
                             }
-
                         }
                         if ((_attackedCard != null) && (_attackedCard._dynamicHealth > _ushortAttack))
                         {
@@ -217,15 +219,16 @@ namespace Cards
                         {
                             _attackedCard._dynamicHealth = 0;
                         }
-                        else if (_attackedCard == null)
+                        else if ((_attackedCard == null) && (_playable))
                         {
                             _cp.GetComponent<HealthManager>().HeroDamage(_ushortAttack, _player);
                         }
                         _cp.GetComponent<GameManager>().ReturnPlayedCard(this);
-                        if ((_attackedCard != null) && (_attackedCard._dynamicHealth == 0))
+                        if ((_attackedCard != null) && (_attackedCard._dynamicHealth == 0) && (_playable))
                         {
                             Destroy(_attackedCard.gameObject);
                         }
+                        _playable = false; //Блокировка карты, чтобы её можно было сыграть только раз за ход
                         break;
                 }
             }
@@ -340,6 +343,13 @@ namespace Cards
         private bool Taunted (Card card)
         {
             if ((card._ID == 103) || (card._ID == 204) || (card._ID == 303) || (card._ID == 308) || (card._ID == 406) || (card._ID == 501) || (card._ID == 603))
+                return true;
+            else return false;
+        }
+
+        private bool Charge()
+        {
+            if ((_ID == 104) || (_ID == 203) || (_ID == 407) || (_ID == 604))
                 return true;
             else return false;
         }

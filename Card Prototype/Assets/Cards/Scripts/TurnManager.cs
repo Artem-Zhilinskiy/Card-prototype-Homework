@@ -29,6 +29,7 @@ namespace Cards
         {
             //Обновление маны
             _cp.GetComponent<GameManager>().ManaRenovation(_playerTurn);
+            _cp.GetComponent<GameManager>().MakePlayableAfterTurn(_playerTurn); //Снятие блока с карт, пролежавших ход и сыгранных в прошлом ходу
             //Смена хода
             switch (_playerTurn)
             { 

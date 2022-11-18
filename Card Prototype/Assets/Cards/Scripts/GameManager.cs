@@ -371,5 +371,28 @@ namespace Cards
             }
             UpdateMana();
         }
+
+        //Метод для снятия блокировки карт, пролежавших на столе ход
+        public void MakePlayableAfterTurn(uint _player)
+        {
+            if (_player == 1)
+            {
+                foreach (var card in _playerPlayed1._cardsInPlayed)
+                {
+                    if (card != null) card._playable = true;
+                }
+            }
+            else if (_player == 2)
+            {
+                foreach (var card in _playerPlayed2._cardsInPlayed)
+                {
+                    if (card != null) card._playable = true;
+                }
+            }
+            else
+            {
+                Debug.LogError("ошибка в методе MakePlayableAfterTurn класса GameManager");
+            }
+        }
     }
 }

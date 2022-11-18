@@ -8,15 +8,12 @@ namespace Cards
     {
         public void PlayEffect(Card card)
         {
-            Debug.Log("Эффект карты " + card._ID);
+            //Debug.Log("Эффект карты " + card._ID);
             switch (card._ID)
             {
                 case 101:
                     break;
             }
         }
-
-        //Провокация
-
     }
 }
