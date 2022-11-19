@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using System;
 
 namespace Cards
 {
@@ -40,6 +41,10 @@ namespace Cards
         private GameObject _pp1;
         private GameObject _pp2;
 
+        //Переменные для поиска PlayerHand
+        private GameObject _ph1;
+        private GameObject _ph2;
+
         //Переменные для поиска изображений героев
         private GameObject _hero1;
         private GameObject _hero2;
@@ -57,7 +62,7 @@ namespace Cards
 
         public bool IsFrontSide => _frontCard.activeSelf;
 
-        Vector3 _handPosition;
+        Transform _handPosition;
 
         //Для отключения карт во время хода другого игрка
         public bool _isPlayerTurn = false;
@@ -67,6 +72,8 @@ namespace Cards
             _cp = GameObject.Find("CenterPoint");
             _pp1 = GameObject.Find("Player1Played");
             _pp2 = GameObject.Find("Player2Played");
+            _ph1 = GameObject.Find("Player1Hand");
+            _ph2 = GameObject.Find("Player2Hand");
             _hero1 = GameObject.Find("Player1Head");
             _hero2 = GameObject.Find("Player2Head");
         }
@@ -117,9 +124,36 @@ namespace Cards
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if ((GameObject.Find("TurnCanvas").GetComponent<TurnManager>()._playerTurn == _player) && (_playable))
+            if ((GameObject.Find("TurnCanvas").GetComponent<TurnManager>()._playerTurn == _player) && (State == CardStateType.InHand))
             {
-                _handPosition = transform.position;
+                if (_player == 1)
+                {
+                    foreach (var card in _ph1.GetComponent<PlayerHand>()._cardsInHand)
+                    {
+                        if ((card != null) &&(_ID == card._ID))
+                        {
+                            int _index = Array.IndexOf(_ph1.GetComponent<PlayerHand>()._cardsInHand, card);
+                            _handPosition = _ph1.GetComponent<PlayerHand>()._positions[_index];
+                            //Debug.Log("место определено успешно");
+                            break;
+                        }
+                        //else Debug.Log("позиция в руке не определена");
+                       
+                    }
+                }
+                else if (_player == 2)
+                {
+                    foreach (var card in _ph2.GetComponent<PlayerHand>()._cardsInHand)
+                    {
+                        if ((card != null) && (_ID == card._ID))
+                        {
+                            int _index = Array.IndexOf(_ph2.GetComponent<PlayerHand>()._cardsInHand, card);
+                            _handPosition = _ph2.GetComponent<PlayerHand>()._positions[_index];
+                            //Debug.Log("место определено успешно");
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -140,7 +174,7 @@ namespace Cards
                     case CardStateType.OnTable:
                     if ((GameObject.Find("TurnCanvas").GetComponent<TurnManager>()._playerTurn == _player) && (_playable))
                     {
-                        _handPosition = transform.position;
+                        _handPosition = transform;
                         _position = eventData.pointerCurrentRaycast.worldPosition;
                         _position.y = 0;
                         transform.position = _position;
@@ -156,7 +190,7 @@ namespace Cards
                 switch (State)
                 {
                     case CardStateType.InHand:
-                        _cp.GetComponent<GameManager>().MoveInPlayedCard(this, _handPosition, _player);
+                        _cp.GetComponent<GameManager>().MoveInPlayedCard(this, _handPosition.position, _player);
                         break;
                     case CardStateType.OnTable:
                         //Определение дистанции до одного из positions PlayerPlayed
@@ -213,6 +247,11 @@ namespace Cards
                         if ((_attackedCard != null) && (_attackedCard._dynamicHealth > _ushortAttack))
                         {
                             _attackedCard._dynamicHealth -= _ushortAttack;
+                            //Проверка на бафф мурлока
+                            if ((_ID == 101) || (_ID == 106) || (_ID == 203) || (_ID == 206))
+                            {
+                                _attackedCard._dynamicHealth -= GameObject.Find("TurnCanvas").GetComponent<TurnManager>()._murlockBuff;
+                            }
                             _attackedCard._health.text = _attackedCard._dynamicHealth.ToString();
                         }
                         else if (_attackedCard != null)
@@ -224,7 +263,7 @@ namespace Cards
                             _cp.GetComponent<HealthManager>().HeroDamage(_ushortAttack, _player);
                         }
                         _cp.GetComponent<GameManager>().ReturnPlayedCard(this);
-                        if ((_attackedCard != null) && (_attackedCard._dynamicHealth == 0) && (_playable))
+                        if ((_attackedCard != null) && (_attackedCard._dynamicHealth <= 0) && (_playable))
                         {
                             Destroy(_attackedCard.gameObject);
                         }
@@ -257,7 +296,8 @@ namespace Cards
                     else
                     {
                         GameManager._koloda.Add(_ID);
-                        Debug.Log(GameManager._koloda.Count + " ID: " + _ID);
+                        //Debug.Log(GameManager._koloda.Count + " ID: " + _ID);
+                        Debug.Log(GameManager._koloda.Count);
                     }
                     break;
             }

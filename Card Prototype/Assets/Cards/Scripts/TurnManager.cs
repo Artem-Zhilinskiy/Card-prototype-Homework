@@ -20,9 +20,18 @@ namespace Cards
         //Флаг первого хода, в который второй игрок не берёт карту.
         private bool _isNotFirstRound = false;
 
+        //Переменные для поиска PlayerPlayed
+        private GameObject _pp1;
+        private GameObject _pp2;
+
+        //Счётчик увеличения силы миньонов
+        public ushort _murlockBuff = 0;
+
         private void Awake()
         {
             _cp = GameObject.Find("CenterPoint");
+            _pp1 = GameObject.Find("Player1Played");
+            _pp2 = GameObject.Find("Player2Played");
         }
 
         public void EndTurn()
@@ -51,6 +60,28 @@ namespace Cards
                     break;
             }
             Debug.Log("Ход игрока " + _playerTurn);
+            CheckMurlockBuff(_playerTurn);
+        }
+
+        private ushort CheckMurlockBuff(ushort _player)
+        {
+            _murlockBuff = 0;
+            switch (_player)
+            {
+                case 1:
+                    foreach (var card in _pp1.GetComponent<PlayerPlayed>()._cardsInPlayed)
+                    {
+                        if ((card != null) && ((card._ID == 101) || (card._ID == 305) ||  (card._ID == 702))) _murlockBuff += 1;
+                    }
+                    break;
+                case 2:
+                    foreach (var card in _pp2.GetComponent<PlayerPlayed>()._cardsInPlayed)
+                    {
+                        if ((card != null) && ((card._ID == 101) || (card._ID == 305) || (card._ID == 702))) _murlockBuff += 1;
+                    }
+                    break;
+            }
+            return _murlockBuff;
         }
     }
 }

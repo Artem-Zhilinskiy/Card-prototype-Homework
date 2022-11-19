@@ -8,10 +8,10 @@ namespace Cards
 {
     public class PlayerHand : MonoBehaviour
     {
-        private Card[] _cardsInHand;
+        public Card[] _cardsInHand;
 
         [SerializeField]
-        private Transform[] _positions;
+        public Transform[] _positions;
 
         private void Awake()
         {

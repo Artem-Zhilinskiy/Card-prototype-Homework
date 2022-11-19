@@ -57,7 +57,7 @@
     </Unit>
     <Unit Id="304" Name="Magma Rager"/>
     <Unit Id="305" Name="Raid Leader">
-      Your other minions have +1 Attack
+      Your other murlocks have +1 Attack
     </Unit>
     <Unit Id="306" Name="Razorfen Hunter">
       #Battlecry/#: Summon a 1/1 Boar
@@ -130,7 +130,7 @@
   <Pack Cost="7" Type="Common">
     <Unit Id="701" Name="Core Hound"/>
     <Unit Id="702" Name="Stormwind Champion">
-      Your other minions have +1/+1
+      Your other murlocks have +1/+1
     </Unit>
     <Unit Id="703" Name="War Golem"/>
   </Pack>

@@ -78,6 +78,8 @@ namespace Cards
         [Header("Мана второго игрока")]
         public int _manaSecondPlayer = 1;
 
+        private int _maxMana = 1;
+
         [SerializeField]
         private TextMeshProUGUI _manaIndicatorFirstPlayer;
         [SerializeField]
@@ -133,7 +135,7 @@ namespace Cards
             return deck;
         }
 
-        private Card[] CreateChosenDeck(Transform root)
+        private Card[] CreateChosenDeck(Transform root, uint _player)
         {
             //Переделанный набор колоды из выбранных в предыдущей сцене
             var deck = new Card[_cardDeckCount]; //Содаётся массив вместимостью 30
@@ -154,6 +156,8 @@ namespace Cards
                             mainTexture = card.Texture
                         };
                         deck[i].Configuration(card, newMat, CardUtility.GetDescriptionById(card.Id));
+                        //Опредение, какому игроку принадлежит карта
+                        deck[i]._player = _player;
                     }
                 }
             }
@@ -346,7 +350,7 @@ namespace Cards
             else
             {
                 ShuffleDeck(_koloda);
-                _player1Deck = CreateChosenDeck(_player1DeckRoot);
+                _player1Deck = CreateChosenDeck(_player1DeckRoot,1);
             }
             _player2Deck = CreateDeck(_player2DeckRoot, 2);
         }
@@ -361,13 +365,14 @@ namespace Cards
         //Метод для обновления маны
         public void ManaRenovation(uint _player)
         {
-            if ((_player == 1) && (_manaFirstPlayer < 10))
+            if ((_maxMana < 10) && (_player == 1)) _maxMana += 1;
+            if (_player == 1)
             {
-                _manaFirstPlayer += 1;
+                _manaFirstPlayer = _maxMana;
             }            
-            if ((_player == 2) && (_manaSecondPlayer < 10))
+            if (_player == 2)
             {
-                _manaSecondPlayer += 1;
+                _manaSecondPlayer = _maxMana;
             }
             UpdateMana();
         }
