@@ -49,6 +49,9 @@ namespace Cards
         private GameObject _hero1;
         private GameObject _hero2;
 
+        //Переменная для поиска TurnManager
+        public TurnManager _tm;
+
 
         //Атакованная карта
         private Card _attackedCard;
@@ -76,6 +79,7 @@ namespace Cards
             _ph2 = GameObject.Find("Player2Hand");
             _hero1 = GameObject.Find("Player1Head");
             _hero2 = GameObject.Find("Player2Head");
+            //_tm = GameObject.Find("TurnCanvas").GetComponent<TurnManager>();
         }
 
         public void Configuration (CardPropertiesData data, Material picture, string description)
@@ -191,6 +195,8 @@ namespace Cards
                 {
                     case CardStateType.InHand:
                         _cp.GetComponent<GameManager>().MoveInPlayedCard(this, _handPosition.position, _player);
+                        //Эффект боевого клича с нанесением урона
+                        BattleCryEffect();
                         break;
                     case CardStateType.OnTable:
                         //Определение дистанции до одного из positions PlayerPlayed
@@ -247,6 +253,12 @@ namespace Cards
                         if ((_attackedCard != null) && (_attackedCard._dynamicHealth > _ushortAttack))
                         {
                             _attackedCard._dynamicHealth -= _ushortAttack;
+                            //Проверка на эффект получеия урона
+                            if (_attackedCard._ID == 504)
+                            {
+                                _attackedCard._ushortAttack += 3;
+                                _attackedCard._attack.text = _ushortAttack.ToString();
+                            }
                             //Проверка на бафф мурлока
                             if ((_ID == 101) || (_ID == 106) || (_ID == 203) || (_ID == 206))
                             {
@@ -271,6 +283,71 @@ namespace Cards
                         break;
                 }
             }
+        }
+
+        private void BattleCryEffect()
+        {
+            switch (_ID)
+            {
+                case 102:
+                    _cp.GetComponent<HealthManager>().HeroDamage(1, _player);
+                    //_attackedCard._dynamicHealth -= 1; //Нанести 1 урон
+                    break;
+                case 302:
+                    _cp.GetComponent<HealthManager>().HeroDamage(1, _player);
+                   // _attackedCard._dynamicHealth -= 1; //Нанести 1 урон
+                    break;
+                case 506:
+                    _cp.GetComponent<HealthManager>().HeroDamage(2, _player);
+                    //_attackedCard._dynamicHealth -= 2; //Нанести 2 урона
+                    break;
+                case 505:
+                    _cp.GetComponent<HealthManager>().HeroDamage(3, _player); //Наненсти 3 урона герою противника
+                    break;
+                case 105:
+                    _cp.GetComponent<HealthManager>().HeroHeal(2, _player);  //Восстановить два здоровья
+                    break;
+                case 502:
+                    _cp.GetComponent<HealthManager>().HeroHeal(2, _player);  //Восстановить два здоровья герою
+                    //Прибавить два здоровья сыгранным картам
+                    if (_player == 1)
+                    {
+                        foreach (var card in _pp1.GetComponent<PlayerPlayed>()._cardsInPlayed)
+                        {
+                            card._dynamicHealth += 2;
+                            card._health.text = card._dynamicHealth.ToString();
+                        }
+                    }
+                    else
+                    {
+                        foreach (var card in _pp2.GetComponent<PlayerPlayed>()._cardsInPlayed)
+                        {
+                            card._dynamicHealth += 2;
+                            card._health.text = card._dynamicHealth.ToString();
+                        }
+                    }
+                    break;
+                case 207:
+                    DrawCard();
+                    break;
+                case 403:
+                    DrawCard();
+                    break;
+                case 206:
+                    _cp.GetComponent<GameManager>().DrawExactCard(206);
+                    break;
+                case 306:
+                    _cp.GetComponent<GameManager>().DrawExactCard(306);
+                    break;
+                case 402:
+                    _cp.GetComponent<GameManager>().DrawExactCard(402);
+                    break;
+            }
+        }
+
+        private void DrawCard()
+        {
+            _tm.EffectDrawCard();
         }
 
         public void OnPointerDown(PointerEventData eventData)

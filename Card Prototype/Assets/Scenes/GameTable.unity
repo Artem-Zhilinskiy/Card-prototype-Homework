@@ -2316,6 +2316,7 @@ MonoBehaviour:
   _cardDeckCount: 30
   _healthManager: {fileID: 1022456748}
   _effectManager: {fileID: 1022456749}
+  _turnManager: {fileID: 1503965974}
   _heroPicture: {fileID: 1906621228}
   _mageMat: {fileID: 2100000, guid: 96f1efd130eb66d4a839e8736c354f97, type: 2}
   _warriorMat: {fileID: 2100000, guid: d029fbf9a9af4ed4a85df9bbfc48329d, type: 2}
@@ -3132,6 +3133,7 @@ MonoBehaviour:
   _playerHand1: {fileID: 1740416223}
   _playerHand2: {fileID: 2079049164}
   _playerTurn: 1
+  _murlockBuff: 0
 --- !u!114 &1503965975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3797,6 +3799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4020e1a664497f049a88e8419d7e9663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cardsInHand: []
   _positions:
   - {fileID: 2117501100}
   - {fileID: 439214543}
@@ -4452,6 +4455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4020e1a664497f049a88e8419d7e9663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cardsInHand: []
   _positions:
   - {fileID: 229450295}
   - {fileID: 722981106}

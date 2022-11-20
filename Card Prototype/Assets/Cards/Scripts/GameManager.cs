@@ -45,6 +45,9 @@ namespace Cards
         [SerializeField, Space]
         private EffectManager _effectManager;
 
+        [SerializeField, Space]
+        private TurnManager _turnManager;
+
         //Картинка игрока
         [SerializeField]
         private Transform _heroPicture;
@@ -131,6 +134,8 @@ namespace Cards
                 deck[i].Configuration(random, newMat, CardUtility.GetDescriptionById(random.Id));
                 //Опредение, какому игроку принадлежит карта
                 deck[i]._player = _player;
+                //Присвоение карте ссылки на скрипт TurnManager
+                deck[i]._tm = _turnManager;
             }
             return deck;
         }
@@ -158,6 +163,8 @@ namespace Cards
                         deck[i].Configuration(card, newMat, CardUtility.GetDescriptionById(card.Id));
                         //Опредение, какому игроку принадлежит карта
                         deck[i]._player = _player;
+                        //Присвоение карте ссылки на скрипт TurnManager
+                        deck[i]._tm = _turnManager;
                     }
                 }
             }
@@ -232,6 +239,47 @@ namespace Cards
                 Debug.Log("_resultRandomCard == null");
             }
             return _resultRandomCard;
+        }
+
+        //Найти определённую карту в колоде
+        private Card FindExactCardInDeck(uint ID)
+        {
+            Card _resultCard = null;
+            foreach (var card in _player1Deck)
+            {
+                if ((card != null) && (card.State == CardStateType.InDeck) && (card._ID == ID))
+                {
+                    _resultCard = card;
+                    return _resultCard;
+                }
+            }
+            return null;
+        }
+
+        public void DrawExactCard(uint ID) //принимается ID вызывающей карты
+        {
+            Card _resultCard = null;
+            //Какую карту надо вытащить
+            if (ID == 206)
+            {
+                _resultCard = FindExactCardInDeck(106);
+            }
+            else if (ID == 306)
+            {
+                _resultCard = FindExactCardInDeck(104);
+            }
+            else if (ID == 402)
+            {
+                _resultCard = FindExactCardInDeck(108);
+            }
+            if (_resultCard == null)
+            {
+                Debug.Log("Искомой карты в колоде нет");
+            }
+            else
+            {
+                _playerHand1.SetNewCard(_resultCard);
+            }
         }
 
         public void ChangeCards(Card _card1)

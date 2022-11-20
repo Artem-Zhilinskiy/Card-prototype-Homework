@@ -83,5 +83,17 @@ namespace Cards
             }
             return _murlockBuff;
         }
+
+        public void EffectDrawCard()
+        {
+            if (_playerTurn == 1)
+            {
+                _cp.GetComponent<GameManager>().TurnNewCard(_cp.GetComponent<GameManager>()._player1Deck, _playerHand1, _playerTurn);
+            }
+            else
+            {
+                _cp.GetComponent<GameManager>().TurnNewCard(_cp.GetComponent<GameManager>()._player2Deck, _playerHand2, _playerTurn);
+            }
+        }
     }
 }

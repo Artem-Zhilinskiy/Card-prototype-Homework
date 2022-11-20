@@ -52,6 +52,19 @@ namespace Cards
             }
         }
 
+        public void HeroHeal(int _heal, uint _player)
+        {
+            if (_player == 1)
+            {
+                _healthFirstPlayer += _heal;
+            }
+            else
+            {
+                _healthSecondPlayer += _heal;
+            }
+            UpdateHealthIndicators();
+        }
+
         #region Тест индикаторов здоровья игроков
         /*
         //Тест индикаторов здоровья
